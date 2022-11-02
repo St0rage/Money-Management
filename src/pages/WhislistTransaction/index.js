@@ -1,10 +1,10 @@
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import React from 'react'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { RFValue } from 'react-native-responsive-fontsize'
 import { IcBackWhite } from '../../assets'
 import { Gap, TotalCard, Transaction } from '../../components'
+import { RFValue } from 'react-native-responsive-fontsize'
 
-const PiggyBankTransaction = () => {
+const WhislistTransaction = () => {
 
     const data = [
         {
@@ -51,21 +51,21 @@ const PiggyBankTransaction = () => {
 
     return (
         <View style={styles.page}>
-            <View style={styles.header} >
+        <View style={styles.header} >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }} >
                     <TouchableOpacity activeOpacity={0.7} style={{ padding: 5 }}>
                         <IcBackWhite />
                     </TouchableOpacity>
                     <Gap width={10} />
-                    <Text style={styles.title}>Tabungan</Text>
+                    <Text style={styles.title}>Whislist</Text>
                 </View>
             </View>
             <View style={styles.card}>
-                <Text style={styles.piggyBankName}>Pribadi</Text>
+                <Text style={styles.WhislistName}>B660 Steel Legend</Text>
                 <Gap height={5} />
-                <TotalCard type='piggy-bank' />
+                <TotalCard type='whislist' />
             </View>
-            <Gap height={95} />
+            <Gap height={130} />
             <View style={{ paddingHorizontal: 30 }}>
                 <Text style={styles.transactionText}>Transaksi</Text>
             </View>
@@ -78,12 +78,14 @@ const PiggyBankTransaction = () => {
                 renderItem={({item, index}) => (
                     <Transaction type={item.type} />
                 )}
+
             />
         </View>
+        
     )
 }
 
-export default PiggyBankTransaction
+export default WhislistTransaction
 
 const styles = StyleSheet.create({
     page: {
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: '#000',
-        height: '30%',
+        height: '38%',
         paddingHorizontal: 30,
         paddingTop: 20
     },
@@ -100,14 +102,14 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Light',
         fontSize: RFValue(22),
         color: '#fff'
-    },  
+    },
     card: {
         position: 'absolute',
         paddingHorizontal: 30,
         width: '100%',
         marginTop: '20%'
     },
-    piggyBankName: {
+    WhislistName: {
         fontFamily: 'Nunito-Medium',
         fontSize: RFValue(27),
         color: '#fff'
@@ -117,4 +119,5 @@ const styles = StyleSheet.create({
         fontSize: RFValue(26),
         color: '#000'
     }
+
 })

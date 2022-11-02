@@ -9,6 +9,8 @@ import UpdateWhislist from "./UpdateWhislist";
 import Profile from "./Profile";
 import Main from "./Main";
 import PiggyBankTransaction from "./PiggyBankTransaction";
+import WhislistTransaction from "./WhislistTransaction";
+import PiggyBankDeposit from "./PiggyBankDeposit";
 
 export {
     Login,
@@ -21,5 +23,7 @@ export {
     UpdateWhislist,
     Profile,
     Main,
-    PiggyBankTransaction
+    PiggyBankTransaction,
+    WhislistTransaction,
+    PiggyBankDeposit
 }

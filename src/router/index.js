@@ -11,14 +11,16 @@ import {
   UpdateWhislist, 
   Profile, 
   Main, 
-  PiggyBankTransaction
+  PiggyBankTransaction,
+  WhislistTransaction,
+  PiggyBankDeposit
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
 
 const Router = () => {
   return (
-    <Stack.Navigator initialRouteName='PiggyBankTransaction'>
+    <Stack.Navigator initialRouteName='PiggyBankDeposit'>
         <Stack.Screen 
           name='Login'
           component={Login}
@@ -76,6 +78,16 @@ const Router = () => {
         <Stack.Screen 
           name='PiggyBankTransaction'
           component={PiggyBankTransaction}
+          options={{ headerShown : false }}
+        />
+        <Stack.Screen 
+          name='WhislistTransaction'
+          component={WhislistTransaction}
+          options={{ headerShown : false }}
+        />
+        <Stack.Screen 
+          name='PiggyBankDeposit'
+          component={PiggyBankDeposit}
           options={{ headerShown : false }}
         />
         

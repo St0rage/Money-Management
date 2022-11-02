@@ -12,6 +12,8 @@ import IcDeposit from './ic-deposit.svg';
 import IcWithdraw from './ic-withdraw.svg';
 import IcTransDeposit from './ic-trans-deposit.svg';
 import IcTransWithdraw from './ic-trans-withdraw.svg';
+import IcWalletDeposit from './ic-wallet-deposit.svg';
+import IcMoney from './ic-money.svg';
 
 export {
     IcBack,
@@ -27,5 +29,7 @@ export {
     IcDeposit,
     IcWithdraw,
     IcTransDeposit,
-    IcTransWithdraw
+    IcTransWithdraw,
+    IcWalletDeposit,
+    IcMoney
 }
