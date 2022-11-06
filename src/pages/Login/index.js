@@ -1,20 +1,23 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { Gap, SubmitButton, TextInput } from '../../components/atoms'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Login = () => {
   return (
-    <View style={styles.page}>
-        <Text style={styles.title}>Login</Text>
-        <View style={styles.form}>
-            <TextInput label='Email' placeholder='contoh@email.com' />
-            <Gap height={20} />
-            <TextInput label='Password' placeholder='password' type='password' />
-            <Gap height={30} />
-            <SubmitButton label='Login' />
+    <KeyboardAwareScrollView>
+        <View style={styles.page}>    
+            <Text style={styles.title}>Login</Text>
+            <View style={styles.form}>
+                <TextInput label='Email' placeholder='contoh@email.com' />
+                <Gap height={20} />
+                <TextInput label='Password' placeholder='password' type='password' />
+                <Gap height={30} />
+                <SubmitButton label='Login' />
+            </View>
         </View>
-    </View>
+    </KeyboardAwareScrollView>
   )
 }
 

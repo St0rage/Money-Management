@@ -4,7 +4,7 @@ import { IcBackWhite } from '../../assets'
 import { Gap, TransactionAction, TransactionCardDeposit } from '../../components'
 import { RFValue } from 'react-native-responsive-fontsize'
 
-const PiggyBankDeposit = () => {
+const WhislistDeposit = () => {
 
     const [amount, setAmount] = useState('0');
 
@@ -24,14 +24,14 @@ const PiggyBankDeposit = () => {
                 </View>
             </View>
             <View style={styles.card}>
-                <TransactionCardDeposit type='piggy-bank' name='Pribadi' value={amount} onChangeText={value => setAmount(value)} />
+                <TransactionCardDeposit type='whislist' name='B660 Steel Legend' value={amount} onChangeText={value => setAmount(value)} />
             </View>
-            <TransactionAction label='Deposit' type='Deposit' disabled={parseInt(amount.substring(2).split('.').join("")) >= 10000 ? false : true} />
+            <TransactionAction label='Deposit' disabled={parseInt(amount.substring(2).split('.').join("")) >= 10000 ? false : true} />
         </View>
     )
 }
 
-export default PiggyBankDeposit
+export default WhislistDeposit
 
 const styles = StyleSheet.create({
     page: {

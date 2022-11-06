@@ -1,17 +1,29 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
-import { IcWalletDeposit } from '../../../assets'
+import { IcWalletDeposit, IcWhislist } from '../../../assets'
 import { Gap } from '../../atoms'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { TextInputMask } from 'react-native-masked-text'
 
-const TransactionCard = ({...restProps}) => {
+const Icon = ({type}) => {
+  switch(type) {
+    case 'piggy-bank' :
+      return <IcWalletDeposit />
+    case 'whislist' :
+      return <IcWhislist />
+    default :
+      return <IcWalletDeposit />
+  }
+}
+
+const TransactionCardDeposit = ({type, name, ...restProps}) => {
   return (
     <View style={styles.container}>
       <View style={styles.type}>
-        <IcWalletDeposit />
+        {/* <IcWalletDeposit /> */}
+        <Icon type={type} />
         <Gap width={20} /> 
-        <Text style={styles.name}>Tabungan Pribadi</Text>
+        <Text style={styles.name}>{type == 'piggy-bank' ? 'Tabungan ' + name : 'Whislist ' + name }</Text>
       </View>
       <Gap height={10} />
       <Text style={styles.label}>Jumlah Transaksi</Text>
@@ -37,7 +49,7 @@ const TransactionCard = ({...restProps}) => {
   )
 }
 
-export default TransactionCard
+export default TransactionCardDeposit
 
 const styles = StyleSheet.create({
   container: {

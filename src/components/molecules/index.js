@@ -7,8 +7,9 @@ import PiggyBankItem from "./PiggyBankItem";
 import WhislistItem from "./WhislistItem";
 import TotalCard from "./TotalCard";
 import Transaction from "./Transaction";
-import TransactionCard from "./TransactionCard";
+import TransactionCardDeposit from "./TransactionCardDeposit";
 import TransactionAction from "./TransactionAction";
+import TransactionCardWithdraw from "./TransactionCardWithdraw";
 
 export {
     UserInfo,
@@ -20,6 +21,7 @@ export {
     WhislistItem,
     TotalCard,
     Transaction,
-    TransactionCard,
-    TransactionAction
+    TransactionCardDeposit,
+    TransactionAction,
+    TransactionCardWithdraw
 }

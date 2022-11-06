@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { IcBackWhite } from '../../assets'
-import { Gap, TransactionAction, TransactionCardDeposit } from '../../components'
+import { Gap, TransactionAction, TransactionCardWithdraw } from '../../components'
 import { RFValue } from 'react-native-responsive-fontsize'
 
-const PiggyBankDeposit = () => {
+const WhislistWithdraw = () => {
 
     const [amount, setAmount] = useState('0');
 
@@ -20,18 +20,18 @@ const PiggyBankDeposit = () => {
                         <IcBackWhite />
                     </TouchableOpacity>
                     <Gap width={10} />
-                    <Text style={styles.title}>Deposit</Text>
+                    <Text style={styles.title}>Withdraw</Text>
                 </View>
             </View>
             <View style={styles.card}>
-                <TransactionCardDeposit type='piggy-bank' name='Pribadi' value={amount} onChangeText={value => setAmount(value)} />
+                <TransactionCardWithdraw type='whislist' name='B660 Steel Legend' value={amount} onChangeText={value => setAmount(value)} />
             </View>
-            <TransactionAction label='Deposit' type='Deposit' disabled={parseInt(amount.substring(2).split('.').join("")) >= 10000 ? false : true} />
+            <TransactionAction label='Withdraw' disabled={parseInt(amount.substring(2).split('.').join("")) >= 10000 ? false : true} />
         </View>
     )
 }
 
-export default PiggyBankDeposit
+export default WhislistWithdraw
 
 const styles = StyleSheet.create({
     page: {

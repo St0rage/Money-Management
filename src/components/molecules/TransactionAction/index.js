@@ -2,8 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { IcMoney } from '../../../assets'
 import { Gap } from '../../../components'
+import { RFValue } from 'react-native-responsive-fontsize'
 
-const TransactionAction = ({disabled}) => {
+const TransactionAction = ({disabled, label}) => {
 
     return (
         <View style={styles.container}>
@@ -17,7 +18,7 @@ const TransactionAction = ({disabled}) => {
             </View>
             <Gap height={20} />
             <TouchableOpacity disabled={disabled} activeOpacity={0.7} style={styles.button(disabled)}>
-                <Text style={styles.buttonLabel}>Deposit</Text>
+                <Text style={styles.buttonLabel}>{label}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -34,12 +35,12 @@ const styles = StyleSheet.create({
     },
     label: {
         fontFamily: 'Nunito-Light',
-        fontSize: 14,
+        fontSize: RFValue(14),
         color: '#828282'
     },
     total: {
         fontFamily: 'Nunito-SemiBold',
-        fontSize: 16,
+        fontSize: RFValue(16),
         color: '#000'
     },
     button: (disabled) => ({
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     buttonLabel: {
         textAlign: 'center',
         fontFamily: 'Nunito-SemiBold',
-        fontSize: 18,
+        fontSize: RFValue(18),
         color: '#fff'
     }
 })
