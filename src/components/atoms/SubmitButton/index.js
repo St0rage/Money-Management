@@ -2,9 +2,9 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
 
-const SubmitButton = ({ label }) => {
+const SubmitButton = ({ label, disabled }) => {
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+    <TouchableOpacity disabled={disabled} activeOpacity={0.8} style={styles.container(disabled)}>
       <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   )
@@ -13,13 +13,13 @@ const SubmitButton = ({ label }) => {
 export default SubmitButton
 
 const styles = StyleSheet.create({
-  container: {
+  container: (disabled) => ({
     // height: 45,
     paddingVertical: 10,
-    backgroundColor: '#000',
+    backgroundColor: disabled ? '#7C7C7C' : '#000',
     justifyContent: 'center',
     borderRadius: 5
-  },
+  }),
   label: {
     fontFamily: 'Nunito-SemiBold',
     fontSize: RFValue(18),

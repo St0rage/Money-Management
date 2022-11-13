@@ -5,19 +5,20 @@ import { Gap, SubmitButton, TextInput } from '../../components/atoms'
 import { IcBack } from '../../assets'
 
 const UpdatePiggyBank = () => {
-  return (
-    <View style={styles.page}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
-            <IcBack />
-        </TouchableOpacity>
-        <Text style={styles.title}>Ubah Tabungan</Text>
-        <View style={styles.form}>
-            <TextInput label='Nama Tabungan' placeholder='nama tabungan "pribadi, kesehatan, rumah, dll"' />
-            <Gap height={30} />
-            <SubmitButton label='Ubah' />
+
+    return (
+        <View style={styles.page}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
+                <IcBack />
+            </TouchableOpacity>
+            <Text style={styles.title}>Ubah Tabungan</Text>
+            <View style={styles.form}>
+                <TextInput label='Nama Tabungan' placeholder='nama tabungan "pribadi, kesehatan, rumah, dll"' />
+                <Gap height={30} />
+                <SubmitButton label='Ubah' />
+            </View>
         </View>
-    </View>
-  )
+    )
 }
 
 export default UpdatePiggyBank

@@ -16,14 +16,21 @@ import {
   PiggyBankDeposit,
   WhislistDeposit,
   PiggyBankWithdraw,
-  WhislistWithdraw
+  WhislistWithdraw,
+  SplashScreen
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
 
 const Router = () => {
   return (
-    <Stack.Navigator initialRouteName='PiggyBankDeposit'>
+    <Stack.Navigator initialRouteName='SplashScreen'>
+
+        <Stack.Screen 
+          name='SplashScreen'
+          component={SplashScreen}
+          options={{ headerShown : false }}
+        />
         <Stack.Screen 
           name='Login'
           component={Login}

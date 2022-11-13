@@ -3,22 +3,25 @@ import React from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { Gap, SubmitButton, TextInput } from '../../components/atoms'
 import { IcBack } from '../../assets'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const ChangePassword = () => {
   return (
-    <View style={styles.page}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
-            <IcBack />
-        </TouchableOpacity>
-        <Text style={styles.title}>Ubah Password</Text>
-        <View style={styles.form}>
-            <TextInput label='Password' placeholder='password' type='password' />
-            <Gap height={20} />
-            <TextInput label='Konfirmasi Password' placeholder='konfirmasi password' type='password' />
-            <Gap height={30} />
-            <SubmitButton label='Ubah' />
+    <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={50} contentContainerStyle={{ flexGrow: 1}} showsVerticalScrollIndicator={false}>
+        <View style={styles.page}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
+                <IcBack />
+            </TouchableOpacity>
+            <Text style={styles.title}>Ubah Password</Text>
+            <View style={styles.form}>
+                <TextInput label='Password' placeholder='password' type='password' />
+                <Gap height={20} />
+                <TextInput label='Konfirmasi Password' placeholder='konfirmasi password' type='password' />
+                <Gap height={30} />
+                <SubmitButton label='Ubah' />
+            </View>
         </View>
-    </View>
+    </KeyboardAwareScrollView>
   )
 }
 

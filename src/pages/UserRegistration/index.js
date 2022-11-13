@@ -3,22 +3,25 @@ import React from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { Gap, SubmitButton, TextInput } from '../../components/atoms'
 import { IcBack } from '../../assets'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const UserRegistration = () => {
   return (
-    <View style={styles.page}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
-            <IcBack />
-        </TouchableOpacity>
-        <Text style={styles.title}>Buat User Baru</Text>
-        <View style={styles.form}>
-            <TextInput label='Nama' placeholder='nama user' />
-            <Gap height={20} />
-            <TextInput label='Email' placeholder='contoh@email.com' />
-            <Gap height={30} />
-            <SubmitButton label='Submit' />
+    <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={50} contentContainerStyle={{ flexGrow: 1}} showsVerticalScrollIndicator={false}>
+        <View style={styles.page}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
+                <IcBack />
+            </TouchableOpacity>
+            <Text style={styles.title}>Buat User Baru</Text>
+            <View style={styles.form}>
+                <TextInput label='Nama' placeholder='nama user' />
+                <Gap height={20} />
+                <TextInput label='Email' placeholder='contoh@email.com' />
+                <Gap height={30} />
+                <SubmitButton label='Submit' />
+            </View>
         </View>
-    </View>
+    </KeyboardAwareScrollView>
   )
 }
 

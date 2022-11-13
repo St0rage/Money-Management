@@ -1,24 +1,36 @@
-import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { Gap, SubmitButton, TextInput } from '../../components/atoms'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Login = () => {
-  return (
-    <KeyboardAwareScrollView>
-        <View style={styles.page}>    
-            <Text style={styles.title}>Login</Text>
-            <View style={styles.form}>
-                <TextInput label='Email' placeholder='contoh@email.com' />
-                <Gap height={20} />
-                <TextInput label='Password' placeholder='password' type='password' />
-                <Gap height={30} />
-                <SubmitButton label='Login' />
+
+    const initialState = {
+        email: '',
+        password: ''
+    }
+
+    const [data, setData] = useState(initialState);
+
+    useEffect(() => {
+        console.log(data)
+    }, [data])
+
+    return (
+        <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={50} contentContainerStyle={{ flexGrow: 1}} showsVerticalScrollIndicator={false}>
+            <View style={styles.page}>    
+                <Text style={styles.title}>Login</Text>
+                <View style={styles.form}>
+                    <TextInput label='Email' placeholder='contoh@email.com' value={data.email} onChangeText={(value) => setData({...data, email: value})} />
+                    <Gap height={20} />
+                    <TextInput label='Password' placeholder='password' type='password' value={data.password} onChangeText={(value) => setData({...data, password: value})} />
+                    <Gap height={30} />
+                    <SubmitButton label='Login' disabled={!Boolean(data.email && data.password)} />
+                </View>
             </View>
-        </View>
-    </KeyboardAwareScrollView>
-  )
+        </KeyboardAwareScrollView>
+    )
 }
 
 export default Login

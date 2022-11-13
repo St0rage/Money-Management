@@ -1,43 +1,18 @@
-import React, { useCallback, useState } from 'react'
-import { FlatList, StyleSheet, View, Text } from 'react-native'
-import { RFValue } from 'react-native-responsive-fontsize'
-import { Balance, Gap, NavigationButton, PiggyBankItem, WhislistItem } from '../../components'
+import React, { useCallback, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Balance, EmptyWhislist, Gap, NavigationButton, PiggyBankItem, WhislistItem } from '../../components';
 
-const data1 = [];
+// const data1 = [];
 const data2 = [];
 
-// const data1 = [
-//   {
-//     'id' : 1,
-//     'piggy_bank_name' : 'Pribadi',
-//     'total' : '20.000.000'
-//   },
-//   {
-//     'id' : 2,
-//     'piggy_bank_name' : 'Pribadi',
-//     'total' : '20.000.000'
-//   },
-//   {
-//     'id' : 3,
-//     'piggy_bank_name' : 'Pribadi',
-//     'total' : '20.000.000'
-//   },
-//   {
-//     'id' : 4,
-//     'piggy_bank_name' : 'Pribadi',
-//     'total' : '20.000.000'
-//   },
-//   {
-//     'id' : 5,
-//     'piggy_bank_name' : 'Pribadi',
-//     'total' : '20.000.000'
-//   },
-//   {
-//     'id' : 6,
-//     'piggy_bank_name' : 'Pribadi',
-//     'total' : '20.000.000'
-//   },
-// ]
+const data1 = [
+  {
+    'id' : 1,
+    'piggy_bank_name' : 'Pribadi',
+    'total' : '20.000.000'
+  },
+]
 
 // const data2 = [
 //   {
@@ -102,10 +77,6 @@ const data2 = [];
 //   },
 // ]
 
-// const dataTest = [
-  
-// ]
-
 const Main = () => {
   const [activeLabel, setActiveLabel] = useState('Whislist')
 
@@ -136,11 +107,6 @@ const Main = () => {
                   total={item.total}
                 />
               )}
-              ListEmptyComponent={() => (
-                <View style={{ marginTop: 20 }}>
-                  <Text style={{ textAlign: 'center', fontFamily: 'Nunito-Reguler', fontSize: RFValue(20), color: '#919191' }}>Anda Belum Mempunyai Tabungan</Text>
-                </View>
-              )}
           />
         ) : (
           <FlatList 
@@ -160,34 +126,10 @@ const Main = () => {
                 progress={item.progress}
               />
             )}
-            ListEmptyComponent={() => (
-              <View style={{ marginTop: 20 }}>
-                <Text style={{ textAlign: 'center', fontFamily: 'Nunito-Reguler', fontSize: RFValue(20), color: '#919191' }}>Anda Belum Mempunyai Whislist</Text>
-              </View>
-            )}
+            ListEmptyComponent={EmptyWhislist}
           />
         )
       }
-
-      {/* <FlatList 
-            contentContainerStyle={{ paddingHorizontal: 30, paddingTop: 10}}
-            columnWrapperStyle={{ justifyContent: 'space-between' }}
-            data={data2}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            // horizontal={false}
-            numColumns={2}
-            keyExtractor={(item) => item.id}
-            renderItem={({item, index}) => (
-              <WhislistItem 
-                whislist_name={item.whislist_name}
-                target={item.target}
-                progress={item.progress}
-              />
-            )}
-      /> */}
-
-      
     </View>
   )
 }

@@ -1,25 +1,31 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { Gap, SubmitButton, TextInput } from '../../components/atoms'
 import { IcBack } from '../../assets'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const UpdateWhislist = () => {
-  return (
-    <View style={styles.page}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
-            <IcBack />
-        </TouchableOpacity>
-        <Text style={styles.title}>Ubah Whislist</Text>
-        <View style={styles.form}>
-            <TextInput label='Nama Whislist' placeholder='nama whislist "sepatu, tas, baju, dll"' />
-            <Gap height={20} />
-            <TextInput label='Target Whislist' placeholder='Rp xxx' type='numeric'  />
-            <Gap height={30} />
-            <SubmitButton label='Ubah' />
-        </View>
-    </View>
-  )
+
+    const [target, setTarget] = useState('20000000')
+
+    return (
+        <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={50} contentContainerStyle={{ flexGrow: 1}} showsVerticalScrollIndicator={false}>
+            <View style={styles.page}>
+                <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
+                    <IcBack />
+                </TouchableOpacity>
+                <Text style={styles.title}>Ubah Whislist</Text>
+                <View style={styles.form}>
+                    <TextInput label='Nama Whislist' placeholder='nama whislist "sepatu, tas, baju, dll"' />
+                    <Gap height={20} />
+                    <TextInput label='Target Whislist' placeholder='Rp xxx' type='numeric' value={target} onChangeText={(value) => setTarget(value)} />
+                    <Gap height={30} />
+                    <SubmitButton label='Ubah' />
+                </View>
+            </View>
+        </KeyboardAwareScrollView>
+    )
 }
 
 export default UpdateWhislist

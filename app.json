@@ -1,4 +1,7 @@
 {
   "name": "MoneyManagementApp",
-  "displayName": "MoneyManagementApp"
+  "displayName": "MoneyManagementApp",
+  "androidStatusBar" : {
+    "backgroundColor" : "#000000"
+  }
 }

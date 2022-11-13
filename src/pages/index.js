@@ -8,6 +8,7 @@ import PiggyBankTransaction from "./PiggyBankTransaction";
 import PiggyBankWithdraw from "./PiggyBankWithdraw";
 import PrimaryPiggyBank from "./PrimaryPiggyBank";
 import Profile from "./Profile";
+import SplashScreen from "./SplashScreen";
 import UpdatePiggyBank from "./UpdatePiggyBank";
 import UpdateWhislist from "./UpdateWhislist";
 import UserRegistration from "./UserRegistration";
@@ -31,5 +32,7 @@ export {
     PiggyBankDeposit,
     WhislistDeposit,
     PiggyBankWithdraw,
-    WhislistWithdraw
+    WhislistWithdraw,
+    SplashScreen
 };
+

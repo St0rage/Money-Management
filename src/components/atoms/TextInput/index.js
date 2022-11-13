@@ -1,18 +1,41 @@
 import { StyleSheet, Text, View, TextInput as TextInputRN } from 'react-native'
 import React from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
+import { TextInputMask } from 'react-native-masked-text'
 
-const TextInput = ({label, placeholder, type}) => {
+const TextInput = ({label, placeholder, type, ...restProps}) => {
   return (
     <View>
         <Text style={styles.label}>{label}</Text>
-        <TextInputRN
-            placeholder={placeholder}
-            placeholderTextColor="#7C7C7C"
-            style={styles.input}
-            secureTextEntry={type == 'password' ? true : false}
-            keyboardType={type == 'numeric' ? "number-pad" : "default"}
-        />
+        {
+            type != 'numeric' ? (
+
+                <TextInputRN
+                    placeholder={placeholder}
+                    placeholderTextColor="#7C7C7C"
+                    style={styles.input}
+                    secureTextEntry={type == 'password' ? true : false}
+                    {...restProps}
+                />
+
+            ) : (
+                <TextInputMask 
+                    placeholder={placeholder}
+                    placeholderTextColor="#7C7C7C"
+                    style={styles.input}
+                    keyboardType="number-pad"
+                    type={'money'}
+                    options={{ 
+                        precision: 0,
+                        separator: ',',
+                        delimiter: '.',
+                        unit: 'Rp ',
+                        suffixUnit: ''
+                    }}
+                    {...restProps}
+                />
+            )
+        }
     </View>
   )
 }
