@@ -1,10 +1,13 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { RFValue } from 'react-native-responsive-fontsize'
+import { useDispatch } from 'react-redux'
 import { Gap, SubmitButton, TextInput } from '../../components/atoms'
+import { showMessage, storeData } from '../../utils'
 
-const Login = () => {
+const Login = ({navigation}) => {
 
     const initialState = {
         email: '',
@@ -13,9 +16,37 @@ const Login = () => {
 
     const [data, setData] = useState(initialState);
 
-    useEffect(() => {
-        console.log(data)
-    }, [data])
+    const dispatch = useDispatch()
+
+    const login = () => {
+        dispatch({type: 'SET_LOADING', value: true})
+        axios.post('http://10.0.2.2/aplikasi-manajemen-uang/public/api/login', data, {
+            headers: {
+                'Accept' : 'application/json'
+            }
+        })
+        .then(res => {
+            console.log(res)
+            dispatch({type: 'SET_LOADING', value: false})
+            // simpan data user
+            storeData('user', res.data.data)
+            // simpan token\
+            storeData('token', {value: `Bearer ${res.data.token}`})
+            // hasPrimaryPiggyBank
+            const hasPrimaryPiggyBank = res.data.piggy_banks_count
+
+            if (hasPrimaryPiggyBank == 0) {
+                navigation.reset({index: 0, routes: [{ name: 'PrimaryPiggyBank'}]})
+            } else {
+                navigation.reset({index: 0, routes: [{ name: 'Main'}]})
+            }
+        })
+        .catch(err => {
+            console.log(err.response)
+            dispatch({type: 'SET_LOADING', value: false})
+            showMessage(err.response.data.message, 'danger')
+        })
+    }
 
     return (
         <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={50} contentContainerStyle={{ flexGrow: 1}} showsVerticalScrollIndicator={false}>
@@ -26,7 +57,7 @@ const Login = () => {
                     <Gap height={20} />
                     <TextInput label='Password' placeholder='password' type='password' value={data.password} onChangeText={(value) => setData({...data, password: value})} />
                     <Gap height={30} />
-                    <SubmitButton label='Login' disabled={!Boolean(data.email && data.password)} />
+                    <SubmitButton label='Login' disabled={!Boolean(data.email && data.password)} onPress={login} />
                 </View>
             </View>
         </KeyboardAwareScrollView>

@@ -2,9 +2,9 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
 
-const SubmitButton = ({ label, disabled }) => {
+const SubmitButton = ({ label, disabled, onPress }) => {
   return (
-    <TouchableOpacity disabled={disabled} activeOpacity={0.8} style={styles.container(disabled)}>
+    <TouchableOpacity disabled={disabled} activeOpacity={0.8} style={styles.container(disabled)} onPress={onPress}>
       <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   )

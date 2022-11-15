@@ -4,7 +4,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { Balance, EmptyWhislist, Gap, NavigationButton, PiggyBankItem, WhislistItem } from '../../components';
 
 // const data1 = [];
-const data2 = [];
+// const data2 = [];
 
 const data1 = [
   {
@@ -14,68 +14,68 @@ const data1 = [
   },
 ]
 
-// const data2 = [
-//   {
-//     'id' : 1,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 10
-//   },
-//   {
-//     'id' : 2,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 20
-//   },
-//   {
-//     'id' : 3,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 30
-//   },
-//   {
-//     'id' : 4,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 40
-//   },
-//   {
-//     'id' : 5,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 50
-//   },
-//   {
-//     'id' : 6,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 60
-//   },
-//   {
-//     'id' : 7,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 70
-//   },
-//   {
-//     'id' : 8,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 80
-//   },
-//   {
-//     'id' : 9,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 90
-//   },
-//   {
-//     'id' : 10,
-//     'target' : '5.000.000',
-//     'whislist_name' : 'RX 6600 XT',
-//     'progress' : 100
-//   },
-// ]
+const data2 = [
+  {
+    'id' : 1,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 10
+  },
+  {
+    'id' : 2,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 20
+  },
+  {
+    'id' : 3,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 30
+  },
+  {
+    'id' : 4,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 40
+  },
+  {
+    'id' : 5,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 50
+  },
+  {
+    'id' : 6,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 60
+  },
+  {
+    'id' : 7,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 70
+  },
+  {
+    'id' : 8,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 80
+  },
+  {
+    'id' : 9,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 90
+  },
+  {
+    'id' : 10,
+    'target' : '5.000.000',
+    'whislist_name' : 'RX 6600 XT',
+    'progress' : 100
+  },
+]
 
 const Main = () => {
   const [activeLabel, setActiveLabel] = useState('Whislist')
