@@ -16,9 +16,9 @@ const Icon = ({type}) => {
     }
 }
 
-const Setting = ({label, type}) => {
+const Setting = ({label, type, onPress}) => {
     return (
-        <TouchableOpacity activeOpacity={0.6} style={styles.container}>
+        <TouchableOpacity activeOpacity={0.6} style={styles.container} onPress={onPress}>
             <Icon type={type} />
             <Text style={styles.label}>{label}</Text>
             <IcExpandRight />
