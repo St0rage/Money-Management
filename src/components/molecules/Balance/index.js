@@ -4,7 +4,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {IcSetting} from '../../../assets';
 
-const Balance = ({name, balance = '20.000.000'}) => {
+const Balance = ({name, balance}) => {
   const navigation = useNavigation();
 
   return (
