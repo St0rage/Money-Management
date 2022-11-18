@@ -1,53 +1,81 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { RFValue } from 'react-native-responsive-fontsize'
-import { Gap, SubmitButton, TextInput } from '../../components/atoms'
-import { IcBack } from '../../assets'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import React, {useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {useDispatch} from 'react-redux';
+import {BackButton, Gap, SubmitButton, TextInput} from '../../components/atoms';
+import {changePasswordAction} from '../../redux/action';
 
-const ChangePassword = () => {
+const ChangePassword = ({navigation}) => {
+  const initialState = {
+    password: '',
+    password_confirmation: '',
+  };
+
+  const [data, setData] = useState(initialState);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = () => {
+    dispatch(changePasswordAction(data, navigation));
+  };
+
   return (
-    <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={50} contentContainerStyle={{ flexGrow: 1}} showsVerticalScrollIndicator={false}>
-        <View style={styles.page}>
-            <TouchableOpacity activeOpacity={0.7} style={styles.backButton}>
-                <IcBack />
-            </TouchableOpacity>
-            <Text style={styles.title}>Ubah Password</Text>
-            <View style={styles.form}>
-                <TextInput label='Password' placeholder='password' type='password' />
-                <Gap height={20} />
-                <TextInput label='Konfirmasi Password' placeholder='konfirmasi password' type='password' />
-                <Gap height={30} />
-                <SubmitButton label='Ubah' />
-            </View>
+    <KeyboardAwareScrollView
+      enableOnAndroid={true}
+      extraScrollHeight={50}
+      contentContainerStyle={{flexGrow: 1}}
+      showsVerticalScrollIndicator={false}>
+      <View style={styles.page}>
+        <BackButton />
+        <Text style={styles.title}>Ubah Password</Text>
+        <View style={styles.form}>
+          <TextInput
+            label="Password"
+            placeholder="password"
+            type="password"
+            value={data.password}
+            onChangeText={value => setData({...data, password: value})}
+          />
+          <Gap height={20} />
+          <TextInput
+            label="Konfirmasi Password"
+            placeholder="konfirmasi password"
+            type="password"
+            value={data.password_confirmation}
+            onChangeText={value =>
+              setData({...data, password_confirmation: value})
+            }
+          />
+          <Gap height={30} />
+          <SubmitButton
+            label="Ubah"
+            disabled={!Boolean(data.password && data.password_confirmation)}
+            onPress={onSubmit}
+          />
         </View>
+      </View>
     </KeyboardAwareScrollView>
-  )
-}
+  );
+};
 
-export default ChangePassword
+export default ChangePassword;
 
 const styles = StyleSheet.create({
-    page: {
-        flex: 1,
-        backgroundColor: '#F0F0F0',
-        paddingHorizontal: 30
-    },
-    backButton: {
-        marginTop: 25,
-        paddingVertical: 10,
-        paddingRight: 10,
-        alignSelf: 'flex-start',
-    },
-    title: {
-        // paddingTop: 93,
-        marginTop: 50,
-        textAlign: 'center',
-        fontFamily: 'Nunito-SemiBold',
-        fontSize: RFValue(26),
-        color: '#000000'
-    },
-    form: {
-        marginTop: 50
-    }
-})
+  page: {
+    flex: 1,
+    backgroundColor: '#F0F0F0',
+    paddingHorizontal: 30,
+  },
+  title: {
+    // paddingTop: 93,
+    marginTop: 50,
+    textAlign: 'center',
+    fontFamily: 'Nunito-SemiBold',
+    fontSize: RFValue(26),
+    color: '#000000',
+  },
+  form: {
+    marginTop: 50,
+  },
+});

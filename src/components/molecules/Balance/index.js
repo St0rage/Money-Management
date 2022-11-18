@@ -13,7 +13,7 @@ const Balance = ({name, balance = '20.000.000'}) => {
         <View style={{flexDirection: 'row', flex: 1}}>
           <Text style={styles.label}>Hai, </Text>
           <Text style={styles.username}>
-            {name?.split(' ').slice(0, -2).join('')}
+            {name?.split(' ').slice(0, -1).join(' ')}
           </Text>
         </View>
         <TouchableOpacity

@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -13,18 +14,36 @@ const Profile = ({navigation}) => {
     dispatch(logoutAction(navigation));
   };
 
+  const clear = () => {
+    AsyncStorage.clear();
+  };
+
   return (
     <View style={styles.page}>
       <UserInfo name={user.name} email={user.email} />
       <View style={styles.actions}>
-        <Action label="Tambah Tabungan" />
-        <Action label="Tambah Whislist" />
+        <Action
+          label="Tambah Tabungan"
+          onPress={() => navigation.navigate('CreatePiggyBank')}
+        />
+        <Action
+          label="Tambah Whislist"
+          onPress={() => navigation.navigate('CreateWhislist')}
+        />
       </View>
       <View style={styles.settings}>
         {user.is_admin ? (
-          <Setting label="Buat User Baru" type="add-user" />
+          <Setting
+            label="Buat User Baru"
+            type="add-user"
+            onPress={() => navigation.navigate('UserRegistration')}
+          />
         ) : null}
-        <Setting label="Ubah Password" type="change-password" />
+        <Setting
+          label="Ubah Password"
+          type="change-password"
+          onPress={() => navigation.navigate('ChangePassword')}
+        />
         <Setting label="Logout" type="logout" onPress={logOut} />
       </View>
     </View>

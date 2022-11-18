@@ -4,25 +4,14 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
 import {IcLogo} from '../../assets';
 import {Gap} from '../../components';
-import {setUser} from '../../redux/action';
-import {getData} from '../../utils';
+import {getUserAction} from '../../redux/action';
 
 const SplashScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
-      getData('token').then(res => {
-        if (res) {
-          getData('user').then(res => {
-            console.log(res);
-            dispatch(setUser(res));
-            navigation.reset({index: 0, routes: [{name: 'Main'}]});
-          });
-        } else {
-          navigation.reset({index: 0, routes: [{name: 'Login'}]});
-        }
-      });
+      dispatch(getUserAction(navigation));
     }, 2000);
   }, []);
 

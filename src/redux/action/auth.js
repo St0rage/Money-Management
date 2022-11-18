@@ -19,7 +19,7 @@ export const loginAction = (data, navigation) => dispatch => {
     .then(res => {
       dispatch(setLoading(false));
       // simpan data user
-      storeData('user', res.data.data);
+      // storeData('user', res.data.data);
       dispatch(setUser(res.data.data));
       // simpan token\
       storeData('token', {value: `Bearer ${res.data.token}`});
@@ -53,6 +53,65 @@ export const logoutAction = navigation => dispatch => {
         AsyncStorage.multiRemove(['user', 'token']).then(() => {
           navigation.reset({index: 0, routes: [{name: 'Login'}]});
         });
+      });
+  });
+};
+
+export const getUserAction = navigation => dispatch => {
+  getData('token').then(res => {
+    if (res) {
+      axios
+        .get(`${API_HOST.url}/user`, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: res.value,
+          },
+        })
+        .then(res => {
+          console.log(res);
+          dispatch(setUser(res.data.data));
+          navigation.reset({index: 0, routes: [{name: 'Main'}]});
+        })
+        .catch(err => {
+          console.log(err.response);
+          AsyncStorage.clear();
+          navigation.reset({index: 0, routes: [{name: 'Login'}]});
+        });
+    } else {
+      navigation.reset({index: 0, routes: [{name: 'Login'}]});
+    }
+  });
+};
+
+export const changePasswordAction = (data, navigation) => dispatch => {
+  dispatch(setLoading(true));
+  getData('token').then(res => {
+    axios
+      .put(`${API_HOST.url}/user/changepassword`, data, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: res.value,
+        },
+      })
+      .then(res => {
+        console.log(res);
+        showMessage(res.data.message, 'success');
+        dispatch(logoutAction(navigation));
+      })
+      .catch(err => {
+        console.log(err.response);
+        dispatch(setLoading(false));
+        const errMsgs = err.response.data.errors.password;
+        let msg = '';
+        errMsgs.forEach((value, i) => {
+          if (i !== errMsgs.length - 1) {
+            msg += value + '\n\n';
+          } else {
+            msg += value;
+          }
+        });
+        // console.log(msg);
+        showMessage(msg, 'danger');
       });
   });
 };
