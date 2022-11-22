@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {Gap, SubmitButton, TextInput} from '../../components/atoms';
 import {loginAction} from '../../redux/action';
 
-const Login = ({route, navigation}) => {
+const Login = ({navigation}) => {
   const initialState = {
     email: '',
     password: '',

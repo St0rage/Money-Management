@@ -68,12 +68,10 @@ export const getUserAction = navigation => dispatch => {
           },
         })
         .then(res => {
-          console.log(res);
           dispatch(setUser(res.data.data));
           navigation.reset({index: 0, routes: [{name: 'Main'}]});
         })
         .catch(err => {
-          console.log(err.response);
           AsyncStorage.clear();
           navigation.reset({index: 0, routes: [{name: 'Login'}]});
         });
@@ -94,12 +92,10 @@ export const changePasswordAction = (data, navigation) => dispatch => {
         },
       })
       .then(res => {
-        console.log(res);
         showMessage(res.data.message, 'success');
         dispatch(logoutAction(navigation));
       })
       .catch(err => {
-        console.log(err.response);
         dispatch(setLoading(false));
         const errMsgs = err.response.data.errors.password;
         let msg = '';
@@ -110,7 +106,55 @@ export const changePasswordAction = (data, navigation) => dispatch => {
             msg += value;
           }
         });
-        // console.log(msg);
+        showMessage(msg, 'danger');
+      });
+  });
+};
+
+export const registerUser = (data, setData) => dispatch => {
+  const initialState = {
+    name: '',
+    email: '',
+  };
+
+  dispatch(setLoading(true));
+  getData('token').then(res => {
+    axios
+      .post(`${API_HOST.url}/register`, data, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: res.value,
+        },
+      })
+      .then(res => {
+        dispatch(setLoading(false));
+        setData({...initialState});
+        showMessage(res.data.message, 'success');
+      })
+      .catch(err => {
+        dispatch(setLoading(false));
+        const data = err.response.data.errors;
+        let msg = '';
+        const errName = Object.hasOwn(data, 'name') ? data.name : [];
+        const errEmail = Object.hasOwn(data, 'email') ? data.email : [];
+        if (errName.length != 0) {
+          errName.forEach((value, i) => {
+            if (i !== errName.length - 1) {
+              msg += value + '\n\n';
+            } else {
+              msg += errEmail.length != 0 ? value + '\n\n' : value;
+            }
+          });
+        }
+        if (errEmail.length != 0) {
+          errEmail.forEach((value, i) => {
+            if (i !== errEmail.length - 1) {
+              msg += value + '\n\n';
+            } else {
+              msg += value;
+            }
+          });
+        }
         showMessage(msg, 'danger');
       });
   });

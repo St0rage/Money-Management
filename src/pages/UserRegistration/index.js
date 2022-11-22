@@ -1,10 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useDispatch} from 'react-redux';
 import {BackButton, Gap, SubmitButton, TextInput} from '../../components/atoms';
+import {registerUser} from '../../redux/action';
 
 const UserRegistration = () => {
+  const initialState = {
+    name: '',
+    email: '',
+  };
+
+  const [data, setData] = useState(initialState);
+
+  const dispatch = useDispatch();
+
+  const register = () => {
+    dispatch(registerUser(data, setData));
+  };
+
   return (
     <KeyboardAwareScrollView
       enableOnAndroid={true}
@@ -15,11 +30,25 @@ const UserRegistration = () => {
         <BackButton />
         <Text style={styles.title}>Buat User Baru</Text>
         <View style={styles.form}>
-          <TextInput label="Nama" placeholder="nama user" />
+          <TextInput
+            label="Nama"
+            placeholder="nama user"
+            value={data.name}
+            onChangeText={value => setData({...data, name: value})}
+          />
           <Gap height={20} />
-          <TextInput label="Email" placeholder="contoh@email.com" />
+          <TextInput
+            label="Email"
+            placeholder="contoh@email.com"
+            value={data.email}
+            onChangeText={value => setData({...data, email: value})}
+          />
           <Gap height={30} />
-          <SubmitButton label="Submit" />
+          <SubmitButton
+            label="Submit"
+            disabled={!Boolean(data.name && data.email)}
+            onPress={register}
+          />
         </View>
       </View>
     </KeyboardAwareScrollView>

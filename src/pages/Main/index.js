@@ -11,6 +11,7 @@ import {
   WhislistItem,
 } from '../../components';
 import {mainAction} from '../../redux/action/main';
+import currency from 'currency.js';
 
 const Main = () => {
   const [activeLabel, setActiveLabel] = useState('Tabungan');

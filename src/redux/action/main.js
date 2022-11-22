@@ -34,9 +34,6 @@ export const mainAction = () => dispatch => {
         const resPiggyBanks = responses[1];
         const resWhislists = responses[2];
 
-        console.log('balance', resBalance);
-        console.log('piggybanks', resPiggyBanks);
-        console.log('whislists', resWhislists);
         dispatch(setBalance(resBalance.data.data));
         dispatch(setPiggyBanks(resPiggyBanks.data.data));
         dispatch(setWhislists(resWhislists.data.data));

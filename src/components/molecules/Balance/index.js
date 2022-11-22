@@ -3,6 +3,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {IcSetting} from '../../../assets';
+import currency from 'currency.js';
 
 const Balance = ({name, balance}) => {
   const navigation = useNavigation();
@@ -23,7 +24,9 @@ const Balance = ({name, balance}) => {
         </TouchableOpacity>
       </View>
       <View style={{marginTop: 18}}>
-        <Text style={styles.balanceTotal}>Rp {balance}</Text>
+        <Text style={styles.balanceTotal}>
+          {currency(balance, {separator: '.', symbol: 'Rp'}).format()}
+        </Text>
         <Text style={styles.balanceLabel}>Total Balance</Text>
       </View>
     </View>
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
   },
   balanceTotal: {
     fontFamily: 'Nunito-SemiBold',
-    fontSize: RFValue(38),
+    fontSize: RFValue(36),
     color: '#fff',
   },
   balanceLabel: {
