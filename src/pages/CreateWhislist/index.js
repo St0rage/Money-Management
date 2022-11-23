@@ -2,10 +2,23 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useDispatch} from 'react-redux';
 import {BackButton, Gap, SubmitButton, TextInput} from '../../components/atoms';
+import {createWhislist} from '../../redux/action';
 
 const CreateWhislist = () => {
-  const [target, setTarget] = useState('0');
+  const intialState = {
+    whislist_name: '',
+    whislist_target: '0',
+  };
+
+  const [data, setData] = useState(intialState);
+
+  const dispatch = useDispatch();
+
+  const submit = () => {
+    dispatch(createWhislist(data, setData, intialState));
+  };
 
   return (
     <KeyboardAwareScrollView
@@ -20,17 +33,32 @@ const CreateWhislist = () => {
           <TextInput
             label="Nama Whislist"
             placeholder='nama whislist "sepatu, tas, baju, dll"'
+            value={data.whislist_name}
+            onChangeText={value => setData({...data, whislist_name: value})}
           />
           <Gap height={20} />
           <TextInput
             label="Target Whislist"
             placeholder="Rp xxx"
             type="numeric"
-            value={target}
-            onChangeText={value => setTarget(value)}
+            value={data.whislist_target}
+            onChangeText={value =>
+              setData({
+                ...data,
+                whislist_target: parseInt(
+                  value.substring(2).split('.').join(''),
+                ),
+              })
+            }
           />
           <Gap height={30} />
-          <SubmitButton label="Buat" />
+          <SubmitButton
+            label="Buat"
+            disabled={
+              !Boolean(data.whislist_name && data.whislist_target >= 10000)
+            }
+            onPress={submit}
+          />
         </View>
       </View>
     </KeyboardAwareScrollView>

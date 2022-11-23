@@ -17,7 +17,7 @@ const UserRegistration = () => {
   const dispatch = useDispatch();
 
   const register = () => {
-    dispatch(registerUser(data, setData));
+    dispatch(registerUser(data, setData, initialState));
   };
 
   return (

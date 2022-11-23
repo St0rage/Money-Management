@@ -17,7 +17,7 @@ const ChangePassword = ({navigation}) => {
   const dispatch = useDispatch();
 
   const onSubmit = () => {
-    dispatch(changePasswordAction(data, navigation));
+    dispatch(changePasswordAction(data, setData, initialState, navigation));
   };
 
   return (

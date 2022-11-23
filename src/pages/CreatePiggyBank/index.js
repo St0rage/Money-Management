@@ -1,9 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useDispatch} from 'react-redux';
 import {BackButton, Gap, SubmitButton, TextInput} from '../../components/atoms';
+import {createPiggyBank} from '../../redux/action';
 
 const CreatePiggyBank = () => {
+  const intialState = {
+    piggy_bank_name: '',
+  };
+
+  const [data, setData] = useState(intialState);
+
+  const dispatch = useDispatch();
+
+  const submit = () => {
+    dispatch(createPiggyBank(data, setData, intialState));
+  };
+
   return (
     <View style={styles.page}>
       <BackButton />
@@ -12,9 +26,17 @@ const CreatePiggyBank = () => {
         <TextInput
           label="Nama Tabungan"
           placeholder='nama tabungan "pribadi, kesehatan, rumah, dll"'
+          value={data.piggy_bank_name}
+          onChangeText={value => {
+            setData({...data, piggy_bank_name: value});
+          }}
         />
         <Gap height={30} />
-        <SubmitButton label="Buat" />
+        <SubmitButton
+          label="Buat"
+          disabled={!Boolean(data.piggy_bank_name)}
+          onPress={submit}
+        />
       </View>
     </View>
   );

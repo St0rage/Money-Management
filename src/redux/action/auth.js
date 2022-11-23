@@ -3,6 +3,7 @@ import {showMessage, storeData, getData} from '../../utils';
 import {setLoading} from './global';
 import {API_HOST} from '../../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setBalance, setPiggyBanks, setWhislists} from './main';
 
 export const setUser = value => {
   return {type: 'SET_USER', value};
@@ -51,6 +52,10 @@ export const logoutAction = navigation => dispatch => {
       .then(res => {
         dispatch(setLoading(false));
         AsyncStorage.multiRemove(['user', 'token']).then(() => {
+          dispatch(setUser({}));
+          dispatch(setBalance({}));
+          dispatch(setPiggyBanks([]));
+          dispatch(setWhislists([]));
           navigation.reset({index: 0, routes: [{name: 'Login'}]});
         });
       });
@@ -81,42 +86,39 @@ export const getUserAction = navigation => dispatch => {
   });
 };
 
-export const changePasswordAction = (data, navigation) => dispatch => {
-  dispatch(setLoading(true));
-  getData('token').then(res => {
-    axios
-      .put(`${API_HOST.url}/user/changepassword`, data, {
-        headers: {
-          Accept: 'application/json',
-          Authorization: res.value,
-        },
-      })
-      .then(res => {
-        showMessage(res.data.message, 'success');
-        dispatch(logoutAction(navigation));
-      })
-      .catch(err => {
-        dispatch(setLoading(false));
-        const errMsgs = err.response.data.errors.password;
-        let msg = '';
-        errMsgs.forEach((value, i) => {
-          if (i !== errMsgs.length - 1) {
-            msg += value + '\n\n';
-          } else {
-            msg += value;
-          }
+export const changePasswordAction =
+  (data, setData, intialState, navigation) => dispatch => {
+    dispatch(setLoading(true));
+    getData('token').then(res => {
+      axios
+        .put(`${API_HOST.url}/user/changepassword`, data, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: res.value,
+          },
+        })
+        .then(res => {
+          showMessage(res.data.message, 'success');
+          setData({...intialState});
+          dispatch(logoutAction(navigation));
+        })
+        .catch(err => {
+          dispatch(setLoading(false));
+          const errMsgs = err.response.data.errors.password;
+          let msg = '';
+          errMsgs.forEach((value, i) => {
+            if (i !== errMsgs.length - 1) {
+              msg += value + '\n\n';
+            } else {
+              msg += value;
+            }
+          });
+          showMessage(msg, 'danger');
         });
-        showMessage(msg, 'danger');
-      });
-  });
-};
-
-export const registerUser = (data, setData) => dispatch => {
-  const initialState = {
-    name: '',
-    email: '',
+    });
   };
 
+export const registerUser = (data, setData, initialState) => dispatch => {
   dispatch(setLoading(true));
   getData('token').then(res => {
     axios

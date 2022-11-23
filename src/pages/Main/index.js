@@ -11,7 +11,6 @@ import {
   WhislistItem,
 } from '../../components';
 import {mainAction} from '../../redux/action/main';
-import currency from 'currency.js';
 
 const Main = () => {
   const [activeLabel, setActiveLabel] = useState('Tabungan');
@@ -77,9 +76,9 @@ const Main = () => {
           keyExtractor={item => '#' + item.id}
           renderItem={({item, index}) => (
             <WhislistItem
-            // whislist_name={item.whislist_name}
-            // target={item.target}
-            // progress={item.progress}
+              whislist_name={item.whislist_name}
+              target={item.whislist_target}
+              progress={item.progress}
             />
           )}
           ListEmptyComponent={EmptyWhislist}

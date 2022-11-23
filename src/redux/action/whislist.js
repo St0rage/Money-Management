@@ -3,32 +3,11 @@ import {API_HOST} from '../../config';
 import {getData, showMessage} from '../../utils';
 import {setLoading} from './global';
 
-export const primaryPiggyBankAction = (data, navigation) => dispatch => {
+export const createWhislist = (data, setData, intialState) => dispatch => {
   dispatch(setLoading(true));
   getData('token').then(res => {
     axios
-      .post(`${API_HOST.url}/piggybank/create`, data, {
-        headers: {
-          Accept: 'application/json',
-          Authorization: res.value,
-        },
-      })
-      .then(res => {
-        dispatch(setLoading(false));
-        navigation.reset({index: 0, routes: [{name: 'Main'}]});
-      })
-      .catch(err => {
-        dispatch(setLoading(false));
-        showMessage(err.response.data.message, 'danger');
-      });
-  });
-};
-
-export const createPiggyBank = (data, setData, intialState) => dispatch => {
-  dispatch(setLoading(true));
-  getData('token').then(res => {
-    axios
-      .post(`${API_HOST.url}/piggybank/create`, data, {
+      .post(`${API_HOST.url}/whislist/create`, data, {
         headers: {
           Accept: 'application/json',
           Authorization: res.value,
@@ -41,7 +20,7 @@ export const createPiggyBank = (data, setData, intialState) => dispatch => {
       })
       .catch(err => {
         dispatch(setLoading(false));
-        const errMsgs = err.response.data.errors.piggy_bank_name;
+        const errMsgs = err.response.data.errors.whislist_name;
         let msg = '';
         errMsgs.forEach((value, i) => {
           if (i !== errMsgs.length - 1) {
