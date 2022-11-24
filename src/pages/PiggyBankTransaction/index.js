@@ -1,19 +1,15 @@
 import {useFocusEffect} from '@react-navigation/native';
-import axios from 'axios';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch, useSelector} from 'react-redux';
 import {BackButton, Gap, TotalCard, Transaction} from '../../components';
-import {API_HOST} from '../../config';
 import {
-  setLoading,
-  setPiggyBankDetail,
-  setPiggyBankTransactions,
+  getPiggyBankDetailTransactionAction,
+  loadMorePiggybankTransactionAction,
 } from '../../redux/action';
-import {getData} from '../../utils';
 
-const PiggyBankTransaction = ({route}) => {
+const PiggyBankTransaction = ({route, navigation}) => {
   const [page, setPage] = useState(0);
 
   const {piggyBankDetail, piggyBankTransactions} = useSelector(
@@ -22,46 +18,27 @@ const PiggyBankTransaction = ({route}) => {
 
   const {id} = route.params;
   const dispatch = useDispatch();
+  const didMount = useRef(false);
 
   useFocusEffect(
     useCallback(() => {
-      setPage(0);
-      dispatch(setLoading(true));
-      getData('token').then(res => {
-        const getDetail = axios.get(`${API_HOST.url}/piggybank/${id}/detail`, {
-          headers: {
-            Accept: 'application/json',
-            Authorization: res.value,
-          },
-        });
-        const getTransactions = axios.get(
-          `${API_HOST.url}/piggybank/${id}/transactions`,
-          {
-            headers: {
-              Accept: 'application/json',
-              Authorization: res.value,
-            },
-            params: {
-              page: page,
-            },
-          },
-        );
-
-        axios.all([getDetail, getTransactions]).then(
-          axios.spread((...response) => {
-            const resDetail = response[0];
-            const resTransactions = response[1];
-
-            console.log(resDetail);
-            console.log(resTransactions);
-            dispatch(setPiggyBankDetail(resDetail.data.data));
-            dispatch(setPiggyBankTransactions(resTransactions.data.data));
-            dispatch(setLoading(false));
-          }),
-        );
-      });
+      dispatch(getPiggyBankDetailTransactionAction(page, setPage, id));
     }, []),
   );
+
+  useEffect(() => {
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+    dispatch(loadMorePiggybankTransactionAction(page, id));
+  }, [page]);
+
+  const loadMore = () => {
+    if (page * 10 < piggyBankDetail.total_transaction) {
+      setPage(page + 1);
+    }
+  };
 
   return (
     <View style={styles.page}>
@@ -77,7 +54,13 @@ const PiggyBankTransaction = ({route}) => {
           {piggyBankDetail.piggy_bank_name}
         </Text>
         <Gap height={5} />
-        <TotalCard detail={piggyBankDetail} type="piggy-bank" />
+        <TotalCard
+          detail={piggyBankDetail}
+          type="piggy-bank"
+          onPressDeposit={() =>
+            navigation.navigate('PiggyBankDeposit', {id, piggyBankDetail})
+          }
+        />
       </View>
       <Gap height={95} />
       <View style={{paddingHorizontal: 30}}>
@@ -89,6 +72,7 @@ const PiggyBankTransaction = ({route}) => {
         data={piggyBankTransactions}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
+        onEndReached={loadMore}
         renderItem={({item, index}) => (
           <Transaction
             type={item.status}

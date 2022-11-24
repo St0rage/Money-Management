@@ -1,12 +1,17 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import currency from 'currency.js';
 import React, {useState} from 'react';
-import {Gap, TransactionButton} from '../../atoms';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Menu, MenuDivider, MenuItem} from 'react-native-material-menu';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {IcKebab} from '../../../assets';
-import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
-import currency from 'currency.js';
+import {Gap, TransactionButton} from '../../atoms';
 
-const TotalCard = ({detail, type = 'piggy-bank'}) => {
+const TotalCard = ({
+  detail,
+  type = 'piggy-bank',
+  onPressDeposit,
+  onPressWithdraw,
+}) => {
   const [visible, setVisible] = useState(false);
 
   const hideMenu = () => setVisible(false);
@@ -42,13 +47,13 @@ const TotalCard = ({detail, type = 'piggy-bank'}) => {
       <Text style={styles.total}>
         {currency(detail.piggy_bank_total, {
           separator: '.',
-          symbol: 'Rp',
+          symbol: 'Rp ',
         }).format()}
       </Text>
       <Gap height={15} />
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <TransactionButton label="Deposit" />
-        <TransactionButton label="Withdraw" />
+        <TransactionButton label="Deposit" onPress={onPressDeposit} />
+        <TransactionButton label="Withdraw" onPress={onPressWithdraw} />
       </View>
     </View>
   ) : (
