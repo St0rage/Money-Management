@@ -3,6 +3,14 @@ import {API_HOST} from '../../config';
 import {getData, showMessage} from '../../utils';
 import {setLoading} from './global';
 
+export const setPiggyBankDetail = value => {
+  return {type: 'SET_PIGGYBANK_DETAIL', value};
+};
+
+export const setPiggyBankTransactions = value => {
+  return {type: 'SET_PIGGYBANK_TRANSACTIONS', value};
+};
+
 export const primaryPiggyBankAction = (data, navigation) => dispatch => {
   dispatch(setLoading(true));
   getData('token').then(res => {

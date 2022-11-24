@@ -25,7 +25,7 @@ const Balance = ({name, balance}) => {
       </View>
       <View style={{marginTop: 18}}>
         <Text style={styles.balanceTotal}>
-          {currency(balance, {separator: '.', symbol: 'Rp'}).format()}
+          {currency(balance, {separator: '.', symbol: 'Rp '}).format()}
         </Text>
         <Text style={styles.balanceLabel}>Total Balance</Text>
       </View>

@@ -3,16 +3,22 @@ import React from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {IcWallet} from '../../../assets';
 import currency from 'currency.js';
+import {useNavigation} from '@react-navigation/native';
 
-const PiggyBankItem = ({piggy_bank_name, total}) => {
+const PiggyBankItem = ({piggy_bank_name, total, id}) => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.container}
+      onPress={() => navigation.navigate('PiggyBankTransaction', {id})}>
       <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
         <IcWallet />
         <Text style={styles.label}>{piggy_bank_name}</Text>
       </View>
       <Text style={styles.total}>
-        {currency(total, {separator: '.', symbol: 'Rp'}).format()}
+        {currency(total, {separator: '.', symbol: 'Rp '}).format()}
       </Text>
     </TouchableOpacity>
   );

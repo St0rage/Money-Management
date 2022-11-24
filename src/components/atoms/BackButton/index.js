@@ -1,17 +1,30 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {IcBack} from '../../../assets';
+import {IcBack, IcBackWhite} from '../../../assets';
 
-const BackButton = () => {
+const Icon = ({type}) => {
+  switch (type) {
+    case 'transaction':
+      return <IcBackWhite />;
+    default:
+      return <IcBack />;
+  }
+};
+
+const BackButton = ({type}) => {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      style={styles.backButton}
+      style={
+        type == 'transaction'
+          ? styles.backButtonTransaction
+          : styles.backButtonForm
+      }
       onPress={() => navigation.goBack()}>
-      <IcBack />
+      <Icon type={type} />
     </TouchableOpacity>
   );
 };
@@ -19,10 +32,13 @@ const BackButton = () => {
 export default BackButton;
 
 const styles = StyleSheet.create({
-  backButton: {
+  backButtonForm: {
     marginTop: 25,
     paddingVertical: 10,
     paddingRight: 10,
     alignSelf: 'flex-start',
+  },
+  backButtonTransaction: {
+    padding: 5,
   },
 });

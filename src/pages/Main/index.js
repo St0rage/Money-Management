@@ -60,6 +60,7 @@ const Main = () => {
             <PiggyBankItem
               piggy_bank_name={item.piggy_bank_name}
               total={item.piggy_bank_total}
+              id={item.id}
             />
           )}
         />

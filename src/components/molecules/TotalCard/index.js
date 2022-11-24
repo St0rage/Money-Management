@@ -4,8 +4,9 @@ import {Gap, TransactionButton} from '../../atoms';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {IcKebab} from '../../../assets';
 import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
+import currency from 'currency.js';
 
-const TotalCard = ({type = 'piggy-bank'}) => {
+const TotalCard = ({detail, type = 'piggy-bank'}) => {
   const [visible, setVisible] = useState(false);
 
   const hideMenu = () => setVisible(false);
@@ -38,7 +39,12 @@ const TotalCard = ({type = 'piggy-bank'}) => {
         </Menu>
       </View>
       <Gap height={5} />
-      <Text style={styles.total}>Rp 12.000.000</Text>
+      <Text style={styles.total}>
+        {currency(detail.piggy_bank_total, {
+          separator: '.',
+          symbol: 'Rp',
+        }).format()}
+      </Text>
       <Gap height={15} />
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <TransactionButton label="Deposit" />

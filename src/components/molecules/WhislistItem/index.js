@@ -10,7 +10,7 @@ const WhislistItem = ({whislist_name, target, progress}) => {
       <Text style={styles.label}>{whislist_name}</Text>
       <Gap height={10} />
       <Text style={styles.total}>
-        {currency(target, {separator: '.', symbol: 'Rp'}).format()}
+        {currency(target, {separator: '.', symbol: 'Rp '}).format()}
       </Text>
       <Gap height={15} />
       <View style={styles.progressBackground}>
