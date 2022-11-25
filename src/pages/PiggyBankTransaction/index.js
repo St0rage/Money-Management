@@ -5,6 +5,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch, useSelector} from 'react-redux';
 import {BackButton, Gap, TotalCard, Transaction} from '../../components';
 import {
+  getPiggyBankAllAction,
   getPiggyBankDetailTransactionAction,
   loadMorePiggybankTransactionAction,
 } from '../../redux/action';
@@ -23,7 +24,7 @@ const PiggyBankTransaction = ({route, navigation}) => {
   useFocusEffect(
     useCallback(() => {
       setPage(0);
-      dispatch(getPiggyBankDetailTransactionAction(page, id));
+      dispatch(getPiggyBankAllAction(page, id));
     }, []),
   );
 

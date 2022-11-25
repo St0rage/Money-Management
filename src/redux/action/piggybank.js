@@ -68,7 +68,7 @@ export const createPiggyBankAction =
     });
   };
 
-export const getPiggyBankDetailTransactionAction = (page, id) => dispatch => {
+export const getPiggyBankAllAction = (page, id) => dispatch => {
   dispatch(setLoading(true));
   getData('token').then(res => {
     const getDetail = axios.get(`${API_HOST.url}/piggybank/${id}/detail`, {
@@ -85,7 +85,7 @@ export const getPiggyBankDetailTransactionAction = (page, id) => dispatch => {
           Authorization: res.value,
         },
         params: {
-          page: page,
+          page,
         },
       },
     );
@@ -95,8 +95,6 @@ export const getPiggyBankDetailTransactionAction = (page, id) => dispatch => {
         const resDetail = response[0];
         const resTransactions = response[1];
 
-        // console.log(resDetail);
-        console.log(resTransactions);
         dispatch(setPiggyBankDetail(resDetail.data.data));
         dispatch(setPiggyBankTransactions(resTransactions.data.data));
         dispatch(setLoading(false));
@@ -114,11 +112,10 @@ export const loadMorePiggybankTransactionAction = (page, id) => dispatch => {
           Authorization: res.value,
         },
         params: {
-          page: page,
+          page,
         },
       })
       .then(res => {
-        console.log('loadmore', res);
         dispatch(setPiggyBankTransactionsPush(res.data.data));
       });
   });
@@ -136,7 +133,6 @@ export const piggyBankDepositAction =
           },
         })
         .then(res => {
-          console.log(res);
           dispatch(setLoading(false));
           setData({...intialState});
           showMessage(res.data.message, 'success');
@@ -156,13 +152,11 @@ export const piggyBankWithdrawAction =
           },
         })
         .then(res => {
-          console.log(res);
           dispatch(setLoading(false));
           setData({...intialState});
           showMessage(res.data.message, 'success');
         })
         .catch(err => {
-          console.log(err.response);
           dispatch(setLoading(false));
           const data = err.response.data.errors;
           let msg = '';

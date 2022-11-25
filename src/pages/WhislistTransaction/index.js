@@ -1,18 +1,13 @@
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {IcBackWhite} from '../../assets';
-import {BackButton, Gap, TotalCard, Transaction} from '../../components';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch, useSelector} from 'react-redux';
-import {useFocusEffect} from '@react-navigation/native';
+import {BackButton, Gap, TotalCard, Transaction} from '../../components';
 import {
-  setLoading,
-  setWhislistDetail,
-  setWhislistTransactions,
+  getWhislistAllAction,
+  loadMoreWhislistTransactionAction,
 } from '../../redux/action';
-import {getData} from '../../utils';
-import axios from 'axios';
-import {API_HOST} from '../../config';
 
 const WhislistTransaction = ({route, navigation}) => {
   const [page, setPage] = useState(0);
@@ -28,45 +23,25 @@ const WhislistTransaction = ({route, navigation}) => {
   useFocusEffect(
     useCallback(() => {
       setPage(0);
-      dispatch(setLoading(true));
-      getData('token').then(res => {
-        const getDetail = axios.get(`${API_HOST.url}/whislist/${id}/detail`, {
-          headers: {
-            Accept: 'application/json',
-            Authorization: res.value,
-          },
-        });
-        const getTransactions = axios.get(
-          `${API_HOST.url}/whislist/${id}/transactions`,
-          {
-            headers: {
-              Accept: 'application/json',
-              Authorization: res.value,
-            },
-            params: {
-              page: page,
-            },
-          },
-        );
-
-        axios.all([getDetail, getTransactions]).then(
-          axios.spread((...response) => {
-            const resDetail = response[0];
-            const resTransactions = response[1];
-
-            console.log(resTransactions);
-            dispatch(setWhislistDetail(resDetail.data.data));
-            dispatch(setWhislistTransactions(resTransactions.data.data));
-            dispatch(setLoading(false));
-          }),
-        );
-      });
+      dispatch(getWhislistAllAction(page, id));
     }, []),
   );
 
   useEffect(() => {
-    console.log('whislistTransactions', whislistTransactions);
-  }, [whislistTransactions]);
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+    if (page !== 0) {
+      dispatch(loadMoreWhislistTransactionAction(page, id));
+    }
+  }, [page]);
+
+  const loadMore = () => {
+    if (page * 10 < whislistDetail.total_transaction) {
+      setPage(page + 1);
+    }
+  };
 
   return (
     <View style={styles.page}>
@@ -80,7 +55,16 @@ const WhislistTransaction = ({route, navigation}) => {
       <View style={styles.card}>
         <Text style={styles.WhislistName}>{whislistDetail.whislist_name}</Text>
         <Gap height={5} />
-        <TotalCard type="whislist" detail={whislistDetail} />
+        <TotalCard
+          type="whislist"
+          detail={whislistDetail}
+          onPressDeposit={() =>
+            navigation.navigate('WhislistDeposit', {id, whislistDetail})
+          }
+          onPressWithdraw={() =>
+            navigation.navigate('WhislistWithdraw', {id, whislistDetail})
+          }
+        />
       </View>
       <Gap height={130} />
       <View style={{paddingHorizontal: 30}}>
@@ -92,6 +76,7 @@ const WhislistTransaction = ({route, navigation}) => {
         data={whislistTransactions}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
+        onEndReached={whislistDetail.total_transaction > 10 ? loadMore : false}
         renderItem={({item, index}) => (
           <Transaction
             type={item.status}

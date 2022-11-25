@@ -46,3 +46,136 @@ export const createWhislistAction =
         });
     });
   };
+
+export const getWhislistAllAction = (page, id) => dispatch => {
+  dispatch(setLoading(true));
+  getData('token').then(res => {
+    const getDetail = axios.get(`${API_HOST.url}/whislist/${id}/detail`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: res.value,
+      },
+    });
+    const getTransactions = axios.get(
+      `${API_HOST.url}/whislist/${id}/transactions`,
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: res.value,
+        },
+        params: {
+          page,
+        },
+      },
+    );
+
+    axios.all([getDetail, getTransactions]).then(
+      axios.spread((...response) => {
+        const resDetail = response[0];
+        const resTransactions = response[1];
+
+        dispatch(setWhislistDetail(resDetail.data.data));
+        dispatch(setWhislistTransactions(resTransactions.data.data));
+        dispatch(setLoading(false));
+      }),
+    );
+  });
+};
+
+export const loadMoreWhislistTransactionAction = (page, id) => dispatch => {
+  getData('token').then(res => {
+    axios
+      .get(`${API_HOST.url}/whislist/${id}/transactions`, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: res.value,
+        },
+        params: {
+          page,
+        },
+      })
+      .then(res => {
+        console.log('loadmore', res);
+        dispatch(setWhislistTransactionsPush(res.data.data));
+      });
+  });
+};
+
+export const whislistDepositAction =
+  (data, setData, intialState, id) => dispatch => {
+    dispatch(setLoading(true));
+    getData('token').then(res => {
+      axios
+        .post(`${API_HOST.url}/whislist/${id}/transaction/deposit`, data, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: res.value,
+          },
+        })
+        .then(res => {
+          dispatch(setLoading(false));
+          setData({...intialState});
+          showMessage(res.data.message, 'success');
+        })
+        .catch(err => {
+          dispatch(setLoading(false));
+          const errMsgs = err.response.data.errors.amount;
+          let msg = '';
+          errMsgs.forEach((value, i) => {
+            if (i !== errMsgs.length - 1) {
+              msg += value + '\n\n';
+            } else {
+              msg += value;
+            }
+          });
+          showMessage(msg, 'danger');
+        });
+    });
+  };
+
+export const whislistWithdrawAction =
+  (data, setData, intialState, id) => dispatch => {
+    dispatch(setLoading(true));
+    getData('token').then(res => {
+      axios
+        .post(`${API_HOST.url}/whislist/${id}/transaction/withdraw`, data, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: res.value,
+          },
+        })
+        .then(res => {
+          dispatch(setLoading(false));
+          setData({...intialState});
+          showMessage(res.data.message, 'success');
+        })
+        .catch(err => {
+          dispatch(setLoading(false));
+          const data = err.response.data.errors;
+          let msg = '';
+          const errAmount = Object.hasOwn(data, 'amount') ? data.amount : [];
+          const errName = Object.hasOwn(data, 'transaction_name')
+            ? data.transaction_name
+            : [];
+          if (errAmount.length != 0) {
+            errAmount.forEach((value, i) => {
+              if (i !== errAmount.length - 1) {
+                msg += value + '\n\n';
+              } else {
+                msg += errName.length != 0 ? value + '\n\n' : value;
+              }
+            });
+          }
+          if (errName.length != 0) {
+            errName.forEach((value, i) => {
+              if (i !== errName.length - 1) {
+                msg += value + '\n\n';
+              } else {
+                msg += value;
+              }
+            });
+          }
+          showMessage(msg, 'danger');
+        });
+    });
+  };

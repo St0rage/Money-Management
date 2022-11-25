@@ -99,8 +99,8 @@ const TotalCard = ({
       </Text>
       <Gap height={15} />
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <TransactionButton label="Deposit" />
-        <TransactionButton label="Withdraw" />
+        <TransactionButton label="Deposit" onPress={onPressDeposit} />
+        <TransactionButton label="Withdraw" onPress={onPressWithdraw} />
       </View>
     </View>
   );
