@@ -3,10 +3,16 @@ import React from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {Gap} from '../../atoms';
 import currency from 'currency.js';
+import {useNavigation} from '@react-navigation/native';
 
-const WhislistItem = ({whislist_name, target, progress}) => {
+const WhislistItem = ({whislist_name, target, progress, id}) => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.container}
+      onPress={() => navigation.navigate('WhislistTransaction', {id})}>
       <Text style={styles.label}>{whislist_name}</Text>
       <Gap height={10} />
       <Text style={styles.total}>

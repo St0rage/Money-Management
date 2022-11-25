@@ -68,44 +68,42 @@ export const createPiggyBankAction =
     });
   };
 
-export const getPiggyBankDetailTransactionAction =
-  (page, setPage, id) => dispatch => {
-    setPage(0);
-    dispatch(setLoading(true));
-    getData('token').then(res => {
-      const getDetail = axios.get(`${API_HOST.url}/piggybank/${id}/detail`, {
+export const getPiggyBankDetailTransactionAction = (page, id) => dispatch => {
+  dispatch(setLoading(true));
+  getData('token').then(res => {
+    const getDetail = axios.get(`${API_HOST.url}/piggybank/${id}/detail`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: res.value,
+      },
+    });
+    const getTransactions = axios.get(
+      `${API_HOST.url}/piggybank/${id}/transactions`,
+      {
         headers: {
           Accept: 'application/json',
           Authorization: res.value,
         },
-      });
-      const getTransactions = axios.get(
-        `${API_HOST.url}/piggybank/${id}/transactions`,
-        {
-          headers: {
-            Accept: 'application/json',
-            Authorization: res.value,
-          },
-          params: {
-            page: page,
-          },
+        params: {
+          page: page,
         },
-      );
+      },
+    );
 
-      axios.all([getDetail, getTransactions]).then(
-        axios.spread((...response) => {
-          const resDetail = response[0];
-          const resTransactions = response[1];
+    axios.all([getDetail, getTransactions]).then(
+      axios.spread((...response) => {
+        const resDetail = response[0];
+        const resTransactions = response[1];
 
-          // console.log(resDetail);
-          console.log(resTransactions);
-          dispatch(setPiggyBankDetail(resDetail.data.data));
-          dispatch(setPiggyBankTransactions(resTransactions.data.data));
-          dispatch(setLoading(false));
-        }),
-      );
-    });
-  };
+        // console.log(resDetail);
+        console.log(resTransactions);
+        dispatch(setPiggyBankDetail(resDetail.data.data));
+        dispatch(setPiggyBankTransactions(resTransactions.data.data));
+        dispatch(setLoading(false));
+      }),
+    );
+  });
+};
 
 export const loadMorePiggybankTransactionAction = (page, id) => dispatch => {
   getData('token').then(res => {
@@ -142,6 +140,55 @@ export const piggyBankDepositAction =
           dispatch(setLoading(false));
           setData({...intialState});
           showMessage(res.data.message, 'success');
+        });
+    });
+  };
+
+export const piggyBankWithdrawAction =
+  (data, setData, intialState, id) => dispatch => {
+    dispatch(setLoading(true));
+    getData('token').then(res => {
+      axios
+        .post(`${API_HOST.url}/piggybank/${id}/transaction/withdraw`, data, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: res.value,
+          },
+        })
+        .then(res => {
+          console.log(res);
+          dispatch(setLoading(false));
+          setData({...intialState});
+          showMessage(res.data.message, 'success');
+        })
+        .catch(err => {
+          console.log(err.response);
+          dispatch(setLoading(false));
+          const data = err.response.data.errors;
+          let msg = '';
+          const errAmount = Object.hasOwn(data, 'amount') ? data.amount : [];
+          const errName = Object.hasOwn(data, 'transaction_name')
+            ? data.transaction_name
+            : [];
+          if (errAmount.length != 0) {
+            errAmount.forEach((value, i) => {
+              if (i !== errAmount.length - 1) {
+                msg += value + '\n\n';
+              } else {
+                msg += errName.length != 0 ? value + '\n\n' : value;
+              }
+            });
+          }
+          if (errName.length != 0) {
+            errName.forEach((value, i) => {
+              if (i !== errName.length - 1) {
+                msg += value + '\n\n';
+              } else {
+                msg += value;
+              }
+            });
+          }
+          showMessage(msg, 'danger');
         });
     });
   };

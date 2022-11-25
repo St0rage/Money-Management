@@ -80,6 +80,7 @@ const Main = () => {
               whislist_name={item.whislist_name}
               target={item.whislist_target}
               progress={item.progress}
+              id={item.id}
             />
           )}
           ListEmptyComponent={EmptyWhislist}

@@ -4,7 +4,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
 import {BackButton, Gap, SubmitButton, TextInput} from '../../components/atoms';
-import {createWhislist} from '../../redux/action';
+import {createWhislistAction} from '../../redux/action';
 
 const CreateWhislist = () => {
   const intialState = {
@@ -17,7 +17,7 @@ const CreateWhislist = () => {
   const dispatch = useDispatch();
 
   const submit = () => {
-    dispatch(createWhislist(data, setData, intialState));
+    dispatch(createWhislistAction(data, setData, intialState));
   };
 
   return (

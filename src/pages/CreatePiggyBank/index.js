@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
 import {BackButton, Gap, SubmitButton, TextInput} from '../../components/atoms';
-import {createPiggyBank} from '../../redux/action';
+import {createPiggyBankAction} from '../../redux/action';
 
 const CreatePiggyBank = () => {
   const intialState = {
@@ -15,7 +15,7 @@ const CreatePiggyBank = () => {
   const dispatch = useDispatch();
 
   const submit = () => {
-    dispatch(createPiggyBank(data, setData, intialState));
+    dispatch(createPiggyBankAction(data, setData, intialState));
   };
 
   return (

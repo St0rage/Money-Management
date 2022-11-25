@@ -82,11 +82,21 @@ const TotalCard = ({
         </Menu>
       </View>
       <Gap height={5} />
-      <Text style={styles.total}>Rp 12.000.000</Text>
+      <Text style={styles.total}>
+        {currency(detail.whislist_total, {
+          separator: '.',
+          symbol: 'Rp ',
+        }).format()}
+      </Text>
       <Gap height={15} />
       <Text style={styles.label}>Target</Text>
       <Gap height={5} />
-      <Text style={styles.total}>Rp 50.000.000</Text>
+      <Text style={styles.total}>
+        {currency(detail.whislist_target, {
+          separator: '.',
+          symbol: 'Rp ',
+        }).format()}
+      </Text>
       <Gap height={15} />
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <TransactionButton label="Deposit" />

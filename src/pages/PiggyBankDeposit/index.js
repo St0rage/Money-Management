@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
@@ -9,9 +8,7 @@ import {
   TransactionAction,
   TransactionCardDeposit,
 } from '../../components';
-import {API_HOST} from '../../config';
-import {piggyBankDepositAction, setLoading} from '../../redux/action';
-import {getData, showMessage} from '../../utils';
+import {piggyBankDepositAction} from '../../redux/action';
 
 const PiggyBankDeposit = ({route}) => {
   const initialState = {
@@ -25,22 +22,6 @@ const PiggyBankDeposit = ({route}) => {
 
   const deposit = () => {
     dispatch(piggyBankDepositAction(data, setData, initialState, id));
-    // dispatch(setLoading(true));
-    // getData('token').then(res => {
-    //   axios
-    //     .post(`${API_HOST.url}/piggybank/${id}/transaction/deposit`, data, {
-    //       headers: {
-    //         Accept: 'applications/json',
-    //         Authorization: res.value,
-    //       },
-    //     })
-    //     .then(res => {
-    //       console.log(res);
-    //       dispatch(setLoading(false));
-    //       setData({...initialState});
-    //       showMessage(res.data.message, 'success');
-    //     });
-    // });
   };
 
   return (

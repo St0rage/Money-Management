@@ -22,7 +22,8 @@ const PiggyBankTransaction = ({route, navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getPiggyBankDetailTransactionAction(page, setPage, id));
+      setPage(0);
+      dispatch(getPiggyBankDetailTransactionAction(page, id));
     }, []),
   );
 
@@ -31,7 +32,9 @@ const PiggyBankTransaction = ({route, navigation}) => {
       didMount.current = true;
       return;
     }
-    dispatch(loadMorePiggybankTransactionAction(page, id));
+    if (page !== 0) {
+      dispatch(loadMorePiggybankTransactionAction(page, id));
+    }
   }, [page]);
 
   const loadMore = () => {
@@ -60,6 +63,9 @@ const PiggyBankTransaction = ({route, navigation}) => {
           onPressDeposit={() =>
             navigation.navigate('PiggyBankDeposit', {id, piggyBankDetail})
           }
+          onPressWithdraw={() =>
+            navigation.navigate('PiggyBankWithdraw', {id, piggyBankDetail})
+          }
         />
       </View>
       <Gap height={95} />
@@ -72,7 +78,7 @@ const PiggyBankTransaction = ({route, navigation}) => {
         data={piggyBankTransactions}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
-        onEndReached={loadMore}
+        onEndReached={piggyBankDetail.total_transaction > 10 ? loadMore : false}
         renderItem={({item, index}) => (
           <Transaction
             type={item.status}
