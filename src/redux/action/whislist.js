@@ -47,6 +47,37 @@ export const createWhislistAction =
     });
   };
 
+export const updateWhislistAction = (data, id, navigation) => dispatch => {
+  dispatch(setLoading(true));
+  getData('token').then(res => {
+    axios
+      .put(`${API_HOST.url}/whislist/${id}/update`, data, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: res.value,
+        },
+      })
+      .then(res => {
+        dispatch(setLoading(false));
+        showMessage(res.data.message, 'success');
+        navigation.reset({index: 0, routes: [{name: 'Main'}]});
+      })
+      .catch(err => {
+        dispatch(setLoading(false));
+        const errMsgs = err.response.data.errors.whislist_name;
+        let msg = '';
+        errMsgs.forEach((value, i) => {
+          if (i !== errMsgs.length - 1) {
+            msg += value + '\n\n';
+          } else {
+            msg += value;
+          }
+        });
+        showMessage(msg, 'danger');
+      });
+  });
+};
+
 export const getWhislistAllAction = (page, id) => dispatch => {
   dispatch(setLoading(true));
   getData('token').then(res => {

@@ -11,6 +11,7 @@ const TotalCard = ({
   type = 'piggy-bank',
   onPressDeposit,
   onPressWithdraw,
+  onUpdate,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -38,7 +39,9 @@ const TotalCard = ({
             </TouchableOpacity>
           }
           onRequestClose={hideMenu}>
-          <MenuItem textStyle={styles.menuText('reg')}>Update</MenuItem>
+          <MenuItem textStyle={styles.menuText('reg')} onPress={onUpdate}>
+            Update
+          </MenuItem>
           <MenuDivider />
           <MenuItem textStyle={styles.menuText('del')}>Delete</MenuItem>
         </Menu>
@@ -76,7 +79,9 @@ const TotalCard = ({
             </TouchableOpacity>
           }
           onRequestClose={hideMenu}>
-          <MenuItem textStyle={styles.menuText('reg')}>Update</MenuItem>
+          <MenuItem textStyle={styles.menuText('reg')} onPress={onUpdate}>
+            Update
+          </MenuItem>
           <MenuDivider />
           <MenuItem textStyle={styles.menuText('del')}>Delete</MenuItem>
         </Menu>

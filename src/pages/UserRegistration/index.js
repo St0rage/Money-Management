@@ -4,7 +4,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
 import {BackButton, Gap, SubmitButton, TextInput} from '../../components/atoms';
-import {registerUser} from '../../redux/action';
+import {registerUserAction} from '../../redux/action';
 
 const UserRegistration = () => {
   const initialState = {
@@ -17,7 +17,7 @@ const UserRegistration = () => {
   const dispatch = useDispatch();
 
   const register = () => {
-    dispatch(registerUser(data, setData, initialState));
+    dispatch(registerUserAction(data, setData, initialState));
   };
 
   return (

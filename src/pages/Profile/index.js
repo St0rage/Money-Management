@@ -23,11 +23,11 @@ const Profile = ({navigation}) => {
       <UserInfo name={user.name} email={user.email} />
       <View style={styles.actions}>
         <Action
-          label="Tambah Tabungan"
+          label="Buat Tabungan"
           onPress={() => navigation.navigate('CreatePiggyBank')}
         />
         <Action
-          label="Tambah Whislist"
+          label="Buat Whislist"
           onPress={() => navigation.navigate('CreateWhislist')}
         />
       </View>

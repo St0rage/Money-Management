@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {BackButton, Gap, TotalCard, Transaction} from '../../components';
 import {
   getPiggyBankAllAction,
-  getPiggyBankDetailTransactionAction,
   loadMorePiggybankTransactionAction,
 } from '../../redux/action';
 
@@ -66,6 +65,9 @@ const PiggyBankTransaction = ({route, navigation}) => {
           }
           onPressWithdraw={() =>
             navigation.navigate('PiggyBankWithdraw', {id, piggyBankDetail})
+          }
+          onUpdate={() =>
+            navigation.navigate('UpdatePiggyBank', {id, piggyBankDetail})
           }
         />
       </View>

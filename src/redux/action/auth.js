@@ -118,7 +118,7 @@ export const changePasswordAction =
     });
   };
 
-export const registerUser = (data, setData, initialState) => dispatch => {
+export const registerUserAction = (data, setData, initialState) => dispatch => {
   dispatch(setLoading(true));
   getData('token').then(res => {
     axios

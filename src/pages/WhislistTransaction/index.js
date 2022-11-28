@@ -64,6 +64,9 @@ const WhislistTransaction = ({route, navigation}) => {
           onPressWithdraw={() =>
             navigation.navigate('WhislistWithdraw', {id, whislistDetail})
           }
+          onUpdate={() =>
+            navigation.navigate('UpdateWhislist', {id, whislistDetail})
+          }
         />
       </View>
       <Gap height={130} />
