@@ -1,9 +1,10 @@
-import TextInput from './TextInput';
-import Gap from './Gap';
-import SubmitButton from './SubmitButton';
-import NavigationButton from './NavigationButton';
-import TransactionButton from './TransactionButton';
+import Alert from './Alert';
 import BackButton from './BackButton';
+import Gap from './Gap';
+import NavigationButton from './NavigationButton';
+import SubmitButton from './SubmitButton';
+import TextInput from './TextInput';
+import TransactionButton from './TransactionButton';
 
 export {
   TextInput,
@@ -12,4 +13,5 @@ export {
   NavigationButton,
   TransactionButton,
   BackButton,
+  Alert,
 };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {API_HOST} from '../../config';
 import {getData, showMessage} from '../../utils';
-import {setLoading} from './global';
+import {setLoading, setLoadingAlert} from './global';
 
 export const setWhislistDetail = value => {
   return {type: 'SET_WHISLIST_DETAIL', value};
@@ -77,6 +77,33 @@ export const updateWhislistAction = (data, id, navigation) => dispatch => {
       });
   });
 };
+
+export const deleteWhislistAction =
+  (id, setAlert, setMessage, setAlertSuccess, setAlertFail) => dispatch => {
+    setAlert(false);
+    dispatch(setLoadingAlert(true));
+    getData('token').then(res => {
+      axios
+        .delete(`${API_HOST.url}/whislist/${id}/delete`, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: res.value,
+          },
+        })
+        .then(res => {
+          setAlert(false);
+          setMessage(res.data.message);
+          dispatch(setLoadingAlert(false));
+          setAlertSuccess(true);
+        })
+        .catch(err => {
+          setAlert(false);
+          setMessage(err.response.data.message);
+          dispatch(setLoadingAlert(false));
+          setAlertFail(true);
+        });
+    });
+  };
 
 export const getWhislistAllAction = (page, id) => dispatch => {
   dispatch(setLoading(true));

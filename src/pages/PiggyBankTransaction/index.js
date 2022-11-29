@@ -12,9 +12,8 @@ import {
 const PiggyBankTransaction = ({route, navigation}) => {
   const [page, setPage] = useState(0);
 
-  const {piggyBankDetail, piggyBankTransactions} = useSelector(
-    state => state.piggyBankReducer,
-  );
+  const {piggyBankDetail, piggyBankTransactions, refreshPiggyBank} =
+    useSelector(state => state.piggyBankReducer);
 
   const {id} = route.params;
   const dispatch = useDispatch();
@@ -22,10 +21,18 @@ const PiggyBankTransaction = ({route, navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      setPage(0);
       dispatch(getPiggyBankAllAction(page, id));
     }, []),
   );
+
+  useEffect(() => {
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+    setPage(0);
+    dispatch(getPiggyBankAllAction(0, id));
+  }, [refreshPiggyBank]);
 
   useEffect(() => {
     if (!didMount.current) {
@@ -58,6 +65,7 @@ const PiggyBankTransaction = ({route, navigation}) => {
         </Text>
         <Gap height={5} />
         <TotalCard
+          id={id}
           detail={piggyBankDetail}
           type="piggy-bank"
           onPressDeposit={() =>
@@ -84,10 +92,12 @@ const PiggyBankTransaction = ({route, navigation}) => {
         onEndReached={piggyBankDetail.total_transaction > 10 ? loadMore : false}
         renderItem={({item, index}) => (
           <Transaction
-            type={item.status}
+            type="piggy-bank"
+            status={item.status}
             amount={item.amount}
             date={item.date}
             transactionName={item.transaction_name}
+            id={item.id}
           />
         )}
       />

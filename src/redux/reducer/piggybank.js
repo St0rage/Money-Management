@@ -1,6 +1,7 @@
 const initPiggyBankState = {
   piggyBankDetail: {},
   piggyBankTransactions: [],
+  refreshPiggyBank: 0,
 };
 
 export const piggyBankReducer = (state = initPiggyBankState, action) => {
@@ -22,5 +23,12 @@ export const piggyBankReducer = (state = initPiggyBankState, action) => {
       piggyBankTransactions: [...state.piggyBankTransactions, ...action.value],
     };
   }
+  if (action.type === 'SET_REFRESH_PIGGYBANK') {
+    return {
+      ...state,
+      refreshPiggyBank: state.refreshPiggyBank + 1,
+    };
+  }
+
   return state;
 };

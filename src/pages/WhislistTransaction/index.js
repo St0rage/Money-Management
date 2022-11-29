@@ -56,6 +56,7 @@ const WhislistTransaction = ({route, navigation}) => {
         <Text style={styles.WhislistName}>{whislistDetail.whislist_name}</Text>
         <Gap height={5} />
         <TotalCard
+          id={id}
           type="whislist"
           detail={whislistDetail}
           onPressDeposit={() =>
@@ -82,10 +83,12 @@ const WhislistTransaction = ({route, navigation}) => {
         onEndReached={whislistDetail.total_transaction > 10 ? loadMore : false}
         renderItem={({item, index}) => (
           <Transaction
-            type={item.status}
+            type="whislist"
+            status={item.status}
             amount={item.amount}
             date={item.date}
             transactionName={item.transaction_name}
+            id={item.id}
           />
         )}
       />

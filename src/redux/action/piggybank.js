@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {API_HOST} from '../../config';
 import {getData, showMessage} from '../../utils';
-import {setLoading} from './global';
+import {setLoading, setLoadingAlert} from './global';
 
 export const setPiggyBankDetail = value => {
   return {type: 'SET_PIGGYBANK_DETAIL', value};
@@ -13,6 +13,10 @@ export const setPiggyBankTransactions = value => {
 
 export const setPiggyBankTransactionsPush = value => {
   return {type: 'SET_PIGGYBANK_TRANSACTIONS_PUSH', value};
+};
+
+export const setRefreshPiggyBank = () => {
+  return {type: 'SET_REFRESH_PIGGYBANK'};
 };
 
 export const primaryPiggyBankAction = (data, navigation) => dispatch => {
@@ -98,6 +102,31 @@ export const updatePiggyBankAction = (data, id, navigation) => dispatch => {
       });
   });
 };
+
+export const deletePiggyBankAction =
+  (id, setAlert, setMessage, setAlertSuccess, setAlertFail) => dispatch => {
+    setAlert(false);
+    dispatch(setLoadingAlert(true));
+    getData('token').then(res => {
+      axios
+        .delete(`${API_HOST.url}/piggybank/${id}/delete`, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: res.value,
+          },
+        })
+        .then(res => {
+          setMessage(res.data.message);
+          dispatch(setLoadingAlert(false));
+          setAlertSuccess(true);
+        })
+        .catch(err => {
+          setMessage(err.response.data.message);
+          dispatch(setLoadingAlert(false));
+          setAlertFail(true);
+        });
+    });
+  };
 
 export const getPiggyBankAllAction = (page, id) => dispatch => {
   dispatch(setLoading(true));

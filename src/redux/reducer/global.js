@@ -1,5 +1,6 @@
 const initGlobalState = {
   isLoading: false,
+  isLoadingAlert: false,
 };
 
 export const globalReducer = (state = initGlobalState, action) => {
@@ -7,6 +8,12 @@ export const globalReducer = (state = initGlobalState, action) => {
     return {
       ...state,
       isLoading: action.value,
+    };
+  }
+  if (action.type === 'SET_LOADING_ALERT') {
+    return {
+      ...state,
+      isLoadingAlert: action.value,
     };
   }
   return state;
