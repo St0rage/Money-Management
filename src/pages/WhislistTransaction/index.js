@@ -12,7 +12,7 @@ import {
 const WhislistTransaction = ({route, navigation}) => {
   const [page, setPage] = useState(0);
 
-  const {whislistDetail, whislistTransactions} = useSelector(
+  const {whislistDetail, whislistTransactions, refreshWhislist} = useSelector(
     state => state.whislistReducer,
   );
 
@@ -26,6 +26,15 @@ const WhislistTransaction = ({route, navigation}) => {
       dispatch(getWhislistAllAction(page, id));
     }, []),
   );
+
+  useEffect(() => {
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+    setPage(0);
+    dispatch(getWhislistAllAction(0, id));
+  }, [refreshWhislist]);
 
   useEffect(() => {
     if (!didMount.current) {
@@ -49,7 +58,7 @@ const WhislistTransaction = ({route, navigation}) => {
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <BackButton type="transaction" />
           <Gap width={10} />
-          <Text style={styles.title}>Whislist</Text>
+          <Text style={styles.title}>Wishlist</Text>
         </View>
       </View>
       <View style={styles.card}>

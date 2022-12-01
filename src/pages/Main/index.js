@@ -45,9 +45,9 @@ const Main = () => {
         />
         <Gap width={30} />
         <NavigationButton
-          label="Whislist"
+          label="Wishlist"
           func={navigate}
-          active={activeLabel == 'Whislist' ? true : false}
+          active={activeLabel == 'Wishlist' ? true : false}
         />
       </View>
       {activeLabel == 'Tabungan' ? (
@@ -78,7 +78,7 @@ const Main = () => {
           renderItem={({item, index}) => (
             <WhislistItem
               whislist_name={item.whislist_name}
-              target={item.whislist_target}
+              target={item.whislist_total}
               progress={item.progress}
               id={item.id}
             />

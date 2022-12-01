@@ -31,7 +31,7 @@ const TransactionCardWithdraw = ({
         <Icon type={type} />
         <Gap width={20} />
         <Text style={styles.name}>
-          {type == 'piggy-bank' ? 'Tabungan ' + name : 'Whislist ' + name}
+          {type == 'piggy-bank' ? 'Tabungan ' + name : 'Wishlist ' + name}
         </Text>
       </View>
       <Gap height={10} />

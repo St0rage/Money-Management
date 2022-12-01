@@ -28,17 +28,17 @@ const CreateWhislist = () => {
       showsVerticalScrollIndicator={false}>
       <View style={styles.page}>
         <BackButton />
-        <Text style={styles.title}>Buat Whislist</Text>
+        <Text style={styles.title}>Buat Wishlist</Text>
         <View style={styles.form}>
           <TextInput
-            label="Nama Whislist"
-            placeholder='nama whislist "sepatu, tas, baju, dll"'
+            label="Nama Wishlist"
+            placeholder='nama wishlist "sepatu, tas, baju, dll"'
             value={data.whislist_name}
             onChangeText={value => setData({...data, whislist_name: value})}
           />
           <Gap height={20} />
           <TextInput
-            label="Target Whislist"
+            label="Target Wishlist"
             placeholder="Rp xxx"
             type="numeric"
             value={data.whislist_target}

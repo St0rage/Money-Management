@@ -27,7 +27,7 @@ const Profile = ({navigation}) => {
           onPress={() => navigation.navigate('CreatePiggyBank')}
         />
         <Action
-          label="Buat Whislist"
+          label="Buat Wishlist"
           onPress={() => navigation.navigate('CreateWhislist')}
         />
       </View>

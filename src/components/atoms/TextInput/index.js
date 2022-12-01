@@ -36,7 +36,7 @@ const TextInput = ({label, placeholder, type, ...restProps}) => {
           />
           <Gap height={5} />
           <Text style={styles.alert}>
-            * Minimal target whislist adalah Rp 10.000
+            * Minimal target wishlist adalah Rp 10.000
           </Text>
         </>
       )}

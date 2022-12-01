@@ -15,6 +15,10 @@ export const setWhislistTransactionsPush = value => {
   return {type: 'SET_WHISLIST_TRANSACTIONS_PUSH', value};
 };
 
+export const setRefreshWhislist = () => {
+  return {type: 'SET_REFRESH_WHISLIST'};
+};
+
 export const createWhislistAction =
   (data, setData, intialState) => dispatch => {
     dispatch(setLoading(true));
@@ -98,6 +102,31 @@ export const deleteWhislistAction =
         })
         .catch(err => {
           setAlert(false);
+          setMessage(err.response.data.message);
+          dispatch(setLoadingAlert(false));
+          setAlertFail(true);
+        });
+    });
+  };
+
+export const deleteWhislistTransactionAction =
+  (id, setAlert, setMessage, setAlertSuccess, setAlertFail) => dispatch => {
+    setAlert(false);
+    dispatch(setLoadingAlert(true));
+    getData('token').then(res => {
+      axios
+        .delete(`${API_HOST.url}/whislist/transaction/${id}/delete`, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: res.value,
+          },
+        })
+        .then(res => {
+          setMessage(res.data.message);
+          dispatch(setLoadingAlert(false));
+          setAlertSuccess(true);
+        })
+        .catch(err => {
           setMessage(err.response.data.message);
           dispatch(setLoadingAlert(false));
           setAlertFail(true);

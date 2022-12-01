@@ -1,6 +1,7 @@
 const initWhislistState = {
   whislistDetail: {},
   whislistTransactions: [],
+  refreshWhislist: 0,
 };
 
 export const whislistReducer = (state = initWhislistState, action) => {
@@ -20,6 +21,12 @@ export const whislistReducer = (state = initWhislistState, action) => {
     return {
       ...state,
       whislistTransactions: [...state.whislistTransactions, ...action.value],
+    };
+  }
+  if (action.type === 'SET_REFRESH_WHISLIST') {
+    return {
+      ...state,
+      refreshWhislist: state.refreshWhislist + 1,
     };
   }
   return state;

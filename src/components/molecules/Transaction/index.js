@@ -1,13 +1,16 @@
-import axios from 'axios';
 import currency from 'currency.js';
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
 import {IcTransDeposit, IcTransWithdraw} from '../../../assets';
-import {API_HOST} from '../../../config';
-import {setLoadingAlert, setRefreshPiggyBank} from '../../../redux/action';
-import {dateFormat, getData} from '../../../utils';
+import {
+  deletePiggyBankTransactionAction,
+  deleteWhislistTransactionAction,
+  setRefreshPiggyBank,
+  setRefreshWhislist,
+} from '../../../redux/action';
+import {dateFormat} from '../../../utils';
 import {Alert, Gap} from '../../atoms';
 
 const Icon = ({status}) => {
@@ -31,30 +34,26 @@ const Transaction = ({type, status, amount, date, transactionName, id}) => {
 
   // Alert and Delete
   const onDeletePiggyBankTransaction = () => {
-    setAlert(false);
-    dispatch(setLoadingAlert(true));
-    getData('token').then(res => {
-      axios
-        .delete(`${API_HOST.url}/piggybank/transaction/${id}/delete`, {
-          headers: {
-            Accept: 'application/json',
-            Authorization: res.value,
-          },
-        })
-        .then(res => {
-          setMessage(res.data.message);
-          dispatch(setLoadingAlert(false));
-          setAlertSuccess(true);
-        })
-        .catch(err => {
-          setMessage(err.response.data.message);
-          dispatch(setLoadingAlert(false));
-          setAlertFail(true);
-        });
-    });
+    dispatch(
+      deletePiggyBankTransactionAction(
+        id,
+        setAlert,
+        setMessage,
+        setAlertSuccess,
+        setAlertFail,
+      ),
+    );
   };
   const onDeleteWhislistTransaction = () => {
-    setAlertFail(true);
+    dispatch(
+      deleteWhislistTransactionAction(
+        id,
+        setAlert,
+        setMessage,
+        setAlertSuccess,
+        setAlertFail,
+      ),
+    );
   };
 
   return (
@@ -93,7 +92,11 @@ const Transaction = ({type, status, amount, date, transactionName, id}) => {
         message={message}
         onConfirmPressed={() => {
           setAlertSuccess(false);
-          dispatch(setRefreshPiggyBank());
+          if (type == 'piggy-bank') {
+            dispatch(setRefreshPiggyBank());
+          } else {
+            dispatch(setRefreshWhislist());
+          }
         }}
       />
 
