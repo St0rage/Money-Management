@@ -33,11 +33,18 @@ const Profile = ({navigation}) => {
       </View>
       <View style={styles.settings}>
         {user.is_admin ? (
-          <Setting
-            label="Buat User Baru"
-            type="add-user"
-            onPress={() => navigation.navigate('UserRegistration')}
-          />
+          <>
+            <Setting
+              label="Buat User Baru"
+              type="add-user"
+              onPress={() => navigation.navigate('UserRegistration')}
+            />
+            <Setting
+              label="Reset Password"
+              type="reset-password"
+              onPress={() => navigation.navigate('ResetPassword')}
+            />
+          </>
         ) : null}
         <Setting
           label="Ubah Password"

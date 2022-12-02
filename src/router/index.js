@@ -18,6 +18,7 @@ import {
   PiggyBankWithdraw,
   WhislistWithdraw,
   SplashScreen,
+  ResetPassword,
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
@@ -60,6 +61,11 @@ const Router = () => {
       <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
         options={{headerShown: false}}
       />
       <Stack.Screen

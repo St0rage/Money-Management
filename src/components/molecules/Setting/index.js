@@ -1,7 +1,13 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {IcExpandRight, IcLock, IcLogout, IcUserAdd} from '../../../assets';
+import {
+  IcExpandRight,
+  IcLock,
+  IcLogout,
+  IcReset,
+  IcUserAdd,
+} from '../../../assets';
 
 const Icon = ({type}) => {
   switch (type) {
@@ -11,6 +17,8 @@ const Icon = ({type}) => {
       return <IcLock />;
     case 'logout':
       return <IcLogout />;
+    case 'reset-password':
+      return <IcReset />;
     default:
       return <IcLock />;
   }

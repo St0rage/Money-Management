@@ -182,7 +182,6 @@ export const loadMoreWhislistTransactionAction = (page, id) => dispatch => {
         },
       })
       .then(res => {
-        console.log('loadmore', res);
         dispatch(setWhislistTransactionsPush(res.data.data));
       });
   });
