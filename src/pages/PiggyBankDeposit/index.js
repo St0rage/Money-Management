@@ -49,7 +49,7 @@ const PiggyBankDeposit = ({route}) => {
       <TransactionAction
         label="Deposit"
         total={piggyBankDetail.piggy_bank_total}
-        disabled={!Boolean(data.amount >= 10000)}
+        disabled={!Boolean(data.amount >= 500)}
         onPress={deposit}
       />
     </View>

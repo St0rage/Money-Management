@@ -49,7 +49,7 @@ const WhislistDeposit = ({route}) => {
       <TransactionAction
         label="Deposit"
         total={whislistDetail.whislist_total}
-        disabled={!Boolean(data.amount > 10000)}
+        disabled={!Boolean(data.amount >= 500)}
         onPress={deposit}
       />
     </View>

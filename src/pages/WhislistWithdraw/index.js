@@ -53,7 +53,7 @@ const WhislistWithdraw = ({route}) => {
         label="Withdraw"
         total={whislistDetail.whislist_total}
         onPress={withdraw}
-        disabled={!Boolean(data.transaction_name && data.amount >= 10000)}
+        disabled={!Boolean(data.transaction_name && data.amount >= 500)}
       />
     </View>
   );
